@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
-import './widgets/BottomNavigationBar/BottomNavigationBar.dart';
+import './widgets/BottomBar/BottomBar.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyMainApp());
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyMainApp extends StatelessWidget {
+  const MyMainApp({super.key});
+
+  static const String _title = 'Flutter Code Sample';
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome to Flutter'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
+    return const MaterialApp(
+      title: _title,
+      home: MyBottomBar(),
+      
     );
   }
 }

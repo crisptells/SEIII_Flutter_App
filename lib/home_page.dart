@@ -8,6 +8,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 57, 55, 55),
+        ),
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -17,7 +20,12 @@ class HomePage extends StatelessWidget {
             ),
           );
         },
-        child: const Text('Learn Flutter'),
+        child: const Text(
+          'Learn Flutter',
+          style: TextStyle(
+            color: Color.fromARGB(255, 223, 233, 224),
+          ),
+        ),
       ),
     );
   }

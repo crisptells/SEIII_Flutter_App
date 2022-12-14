@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test_app/http_test.dart';
+import 'package:flutter_test_app/http_getAllUsersTest.dart';
+import 'package:flutter_test_app/http_insertNewUserTest.dart';
 
 class LearnFlutterPage extends StatefulWidget {
   const LearnFlutterPage({super.key});
@@ -79,7 +80,7 @@ class _LearnFlutterPageState extends State<LearnFlutterPage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return const MyApp();
+                      return const CreateUser();
                     },
                   ),
                 );

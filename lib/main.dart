@@ -4,6 +4,8 @@ import 'package:flutter_test_app/home_page.dart';
 import 'package:flutter_test_app/account_page.dart';
 import 'package:flutter_test_app/nachhilfe_page.dart';
 
+import 'learn_flutter_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -37,7 +39,7 @@ class _RootPageState extends State<RootPage> {
     HomePage(), // 0
     NachhilfePage(),
     EventPage(),
-    AccountPage(), 
+    AccountPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -56,13 +58,48 @@ class _RootPageState extends State<RootPage> {
         ),
         backgroundColor: const Color.fromARGB(255, 57, 55, 55),
         actions: [
-          IconButton(
-            onPressed: () {
-              debugPrint('Actions');
-            },
-            icon: const Icon(
-              Icons.menu,
-              color: Color.fromARGB(255, 223, 233, 224),
+          Theme(
+            data: Theme.of(context).copyWith(dividerColor: Colors.black),
+            child: PopupMenuButton<int>(
+              itemBuilder: (context) => [
+                PopupMenuItem<int>(
+                  value: 0,
+                  child: Row(
+                    children: const [
+                      Icon(Icons.settings),
+                      SizedBox(width: 7,),
+                      Text('Settings')
+                    ],
+                  ),
+                ),
+                const PopupMenuDivider(),
+                PopupMenuItem<int>(
+                  value: 1,
+                  child: Row(
+                    children: const [
+                      Icon(Icons.policy),
+                      SizedBox(width: 7,),
+                      Text('Policy')
+                    ],
+                  ),
+                ),
+                const PopupMenuDivider(),
+                PopupMenuItem<int>(
+                  value: 2,
+                  child: Row(
+                    children: const [
+                      Icon(Icons.logout),
+                      SizedBox(width: 7,),
+                      Text('Logout')
+                    ],
+                  ),
+                ),
+              ],
+              onSelected: (item) => SelectedItem(context, item),
+              icon: const Icon(
+                Icons.menu,
+                color: Color.fromARGB(255, 223, 233, 224),
+              ),
             ),
           ),
         ],
@@ -115,5 +152,20 @@ class _RootPageState extends State<RootPage> {
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  // ignore: non_constant_identifier_names
+  SelectedItem(BuildContext context, int item) {
+    switch (item) {
+      case 0:
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LearnFlutterPage()));
+        break;
+      case 1:
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LearnFlutterPage()));
+        break;
+      case 2:
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LearnFlutterPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
+        break;
+    }
   }
 }

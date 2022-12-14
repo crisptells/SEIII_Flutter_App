@@ -37,7 +37,7 @@ class _RootPageState extends State<RootPage> {
     HomePage(), // 0
     NachhilfePage(),
     EventPage(),
-    AccountPage(), 
+    AccountPage(),
   ];
 
   void _onItemTapped(int index) {

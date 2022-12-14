@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_app/http_test.dart';
 
 class LearnFlutterPage extends StatefulWidget {
   const LearnFlutterPage({super.key});
@@ -75,6 +76,13 @@ class _LearnFlutterPageState extends State<LearnFlutterPage> {
                     isSwitch ? Colors.grey : Colors.blue, // true : false
               ),
               onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return const MyApp();
+                    },
+                  ),
+                );
                 debugPrint('Elevated Button');
               },
               child: const Text('Elevated Button'),

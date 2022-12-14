@@ -51,24 +51,33 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
       appBar: AppBar(
         title: const Text(
           'Nachhilfe',
-          style: TextStyle(color: Color.fromARGB(255, 223, 233, 224)),
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color.fromARGB(255, 57, 55, 55),
+        backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
         actions: [
           Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.black),
+            data: Theme.of(context).copyWith(dividerColor: Colors.white),
             child: PopupMenuButton<int>(
+              color: const Color.fromRGBO(64, 75, 96, .9),
               itemBuilder: (context) => [
                 PopupMenuItem<int>(
                   value: 0,
                   child: Row(
                     children: const [
-                      Icon(Icons.settings),
-                      SizedBox(width: 7,),
-                      Text('Settings')
+                      Icon(Icons.settings, color: Colors.white),
+                      SizedBox(
+                        width: 7,
+                      ),
+                      Text(
+                        'Settings',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -77,9 +86,16 @@ class _RootPageState extends State<RootPage> {
                   value: 1,
                   child: Row(
                     children: const [
-                      Icon(Icons.policy),
-                      SizedBox(width: 7,),
-                      Text('Policy')
+                      Icon(Icons.policy, color: Colors.white),
+                      SizedBox(
+                        width: 7,
+                      ),
+                      Text(
+                        'Policy',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -88,9 +104,16 @@ class _RootPageState extends State<RootPage> {
                   value: 2,
                   child: Row(
                     children: const [
-                      Icon(Icons.logout),
-                      SizedBox(width: 7,),
-                      Text('Logout')
+                      Icon(Icons.logout, color: Colors.white,),
+                      SizedBox(
+                        width: 7,
+                      ),
+                      Text(
+                        'Logout',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -98,7 +121,7 @@ class _RootPageState extends State<RootPage> {
               onSelected: (item) => SelectedItem(context, item),
               icon: const Icon(
                 Icons.menu,
-                color: Color.fromARGB(255, 223, 233, 224),
+                color: Colors.white,
               ),
             ),
           ),
@@ -110,20 +133,20 @@ class _RootPageState extends State<RootPage> {
         onPressed: () {
           debugPrint('Text in Terminal');
         },
-        backgroundColor: const Color.fromARGB(255, 57, 55, 55),
+        backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
         child: const Icon(
           Icons.add,
-          color: Color.fromARGB(255, 223, 233, 224),
+          color: Colors.white,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color.fromARGB(255, 57, 55, 55),
+        backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
         mouseCursor: SystemMouseCursors.grab,
-        selectedIconTheme: const IconThemeData(
-            color: Color.fromARGB(255, 223, 233, 224), size: 30), // Icon Color
+        selectedIconTheme:
+            const IconThemeData(color: Colors.white, size: 30), // Icon Color
         selectedItemColor:
-            const Color.fromARGB(255, 223, 233, 224), // Text Color
+            const Color.fromARGB(255, 255, 255, 255), // Text Color
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         unselectedIconTheme:
             const IconThemeData(color: Color.fromARGB(255, 189, 190, 189)),
@@ -158,13 +181,17 @@ class _RootPageState extends State<RootPage> {
   SelectedItem(BuildContext context, int item) {
     switch (item) {
       case 0:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LearnFlutterPage()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const LearnFlutterPage()));
         break;
       case 1:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LearnFlutterPage()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const LearnFlutterPage()));
         break;
       case 2:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LearnFlutterPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                const LearnFlutterPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
         break;
     }
   }

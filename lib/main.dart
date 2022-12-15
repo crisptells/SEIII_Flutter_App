@@ -104,7 +104,10 @@ class _RootPageState extends State<RootPage> {
                   value: 2,
                   child: Row(
                     children: const [
-                      Icon(Icons.logout, color: Colors.white,),
+                      Icon(
+                        Icons.logout,
+                        color: Colors.white,
+                      ),
                       SizedBox(
                         width: 7,
                       ),
@@ -130,9 +133,7 @@ class _RootPageState extends State<RootPage> {
       body: pages[
           currentPage], // hier wird die Liste aufgerufen --> dann wird die entsprechende Seite angezeigt
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          debugPrint('Text in Terminal');
-        },
+        onPressed: () => _dialogBuilder(context),
         backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
         child: const Icon(
           Icons.add,
@@ -194,5 +195,86 @@ class _RootPageState extends State<RootPage> {
                 const LearnFlutterPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
         break;
     }
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
+          title: const Text(
+            'Kurs hinzufügen',
+            style: TextStyle(color: Colors.white, fontSize: 24),
+          ),
+          content: SizedBox(
+            height: 230,
+            child: Column(
+              children: const [
+                Text(
+                  'Kurs:                                                            ',
+                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Dozent:                                                      ',
+                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+                backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
+              ),
+              child: const Text(
+                'Zurück',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+                backgroundColor: const Color.fromRGBO(
+                    64, 75, 96, .9), // heller Color.fromRGBO(64, 75, 96, .9)
+              ), // dunkler Color.fromRGBO(58, 66, 86, 1)
+              child: const Text(
+                'Hinzufügen',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

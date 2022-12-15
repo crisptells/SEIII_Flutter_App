@@ -69,7 +69,7 @@ class AccountPage extends StatelessWidget {
           ),
           const Text(
             'student@mail.com',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: Color.fromARGB(255, 201, 194, 194)),
           ),
           const SizedBox(
             height: 20,
@@ -78,7 +78,7 @@ class AccountPage extends StatelessWidget {
             alignment: Alignment.topLeft,
             margin: const EdgeInsets.all(20.0),
             child: const Text(
-              'About',
+              'Meine Kurse',
               style: TextStyle(
                   fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
             ),

@@ -3,6 +3,7 @@ import 'package:flutter_test_app/events_page.dart';
 import 'package:flutter_test_app/home_page.dart';
 import 'package:flutter_test_app/account_page.dart';
 import 'package:flutter_test_app/nachhilfe_page.dart';
+import 'package:flutter_test_app/settings_page.dart';
 
 import 'learn_flutter_page.dart';
 
@@ -54,8 +55,8 @@ class _RootPageState extends State<RootPage> {
       backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
       appBar: AppBar(
         title: const Text(
-          'Nachhilfe',
-          style: TextStyle(color: Colors.white),
+          'StudyRight',
+          style: TextStyle(color: Colors.white, fontSize: 26),
         ),
         backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
         actions: [
@@ -183,7 +184,7 @@ class _RootPageState extends State<RootPage> {
     switch (item) {
       case 0:
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const LearnFlutterPage()));
+            MaterialPageRoute(builder: (context) => const SettingsPage()));
         break;
       case 1:
         Navigator.of(context).push(

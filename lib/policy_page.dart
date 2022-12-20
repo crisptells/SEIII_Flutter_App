@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test_app/http_getAllUsersTest.dart';
-import 'package:flutter_test_app/http_insertNewUserTest.dart';
+//import 'package:flutter_test_app/http_getAllUsersTest.dart';
+//import 'package:flutter_test_app/http_insertNewUserTest.dart';
 import 'package:flutter_test_app/login_out_page.dart';
 import 'package:flutter_test_app/settings_page.dart';
 
-import 'learn_flutter_page.dart';
+//import 'learn_flutter_page.dart';
 
 class PolicyPage extends StatefulWidget {
   const PolicyPage({super.key});
@@ -120,13 +120,13 @@ class _PolicyPageState extends State<PolicyPage> {
             const Divider(
               color: Colors.white,
             ),
-            Container(
-            ),
+            Container(),
           ],
         ),
       ),
     );
   }
+
   // ignore: non_constant_identifier_names
   SelectedItem(BuildContext context, int item) {
     switch (item) {
@@ -135,8 +135,8 @@ class _PolicyPageState extends State<PolicyPage> {
             MaterialPageRoute(builder: (context) => const SettingsPage()));
         break;
       case 1:
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const PolicyPage()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const PolicyPage()));
         break;
       case 2:
         Navigator.of(context).push(MaterialPageRoute(

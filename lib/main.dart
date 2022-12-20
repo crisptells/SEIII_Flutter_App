@@ -4,23 +4,57 @@ import 'package:flutter_test_app/home_page.dart';
 import 'package:flutter_test_app/account_page.dart';
 import 'package:flutter_test_app/nachhilfe_page.dart';
 import 'package:flutter_test_app/settings_page.dart';
+import 'package:flutter_test_app/theme.dart';
+import 'package:provider/provider.dart';
 
 import 'learn_flutter_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  //const MyApp({super.key});
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentAppTheme();
+  }
+
+  void getCurrentAppTheme() async {
+    themeChangeProvider.darkTheme =
+        await themeChangeProvider.darkThemePreference.getTheme();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider(
+      create: (_) {
+        return themeChangeProvider;
+      },
+      child: Consumer<DarkThemeProvider>(
+        builder: (BuildContext context, value, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+            home: const RootPage(),
+          );
+        },
+      ),
+    );
+    /**  return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.grey),
+      theme: Styles.themeData(themeChangeProvider.darkTheme, context),
       home: const RootPage(),
     );
+    */
   }
 }
 
@@ -51,8 +85,9 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: const Text(
           'StudyRight',
@@ -141,6 +176,7 @@ class _RootPageState extends State<RootPage> {
           color: Colors.white,
         ),
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
@@ -214,7 +250,10 @@ class _RootPageState extends State<RootPage> {
               children: const [
                 Text(
                   'Kurs:                                                            ',
-                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 20,
@@ -230,7 +269,10 @@ class _RootPageState extends State<RootPage> {
                 ),
                 Text(
                   'Dozent:                                                      ',
-                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
                 SizedBox(

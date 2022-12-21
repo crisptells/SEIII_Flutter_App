@@ -89,29 +89,32 @@ class _RootPageState extends State<RootPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'StudyRight',
-          style: TextStyle(color: Colors.white, fontSize: 26),
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.secondary, fontSize: 26),
         ),
-        backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
+        backgroundColor: Theme.of(context).backgroundColor,
         actions: [
           Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.white),
+            data: Theme.of(context)
+                .copyWith(dividerColor: Theme.of(context).hintColor),
             child: PopupMenuButton<int>(
-              color: const Color.fromRGBO(64, 75, 96, .9),
+              color: Theme.of(context).primaryColor,
               itemBuilder: (context) => [
                 PopupMenuItem<int>(
                   value: 0,
                   child: Row(
-                    children: const [
-                      Icon(Icons.settings, color: Colors.white),
-                      SizedBox(
+                    children: [
+                      Icon(Icons.settings,
+                          color: Theme.of(context).colorScheme.secondary),
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
                         'Settings',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                     ],
@@ -121,15 +124,16 @@ class _RootPageState extends State<RootPage> {
                 PopupMenuItem<int>(
                   value: 1,
                   child: Row(
-                    children: const [
-                      Icon(Icons.policy, color: Colors.white),
-                      SizedBox(
+                    children: [
+                      Icon(Icons.policy,
+                          color: Theme.of(context).colorScheme.secondary),
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
                         'Policy',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       )
                     ],
@@ -139,18 +143,18 @@ class _RootPageState extends State<RootPage> {
                 PopupMenuItem<int>(
                   value: 2,
                   child: Row(
-                    children: const [
+                    children: [
                       Icon(
                         Icons.logout,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
                         'Logout',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       )
                     ],
@@ -158,9 +162,9 @@ class _RootPageState extends State<RootPage> {
                 ),
               ],
               onSelected: (item) => SelectedItem(context, item),
-              icon: const Icon(
+              icon: Icon(
                 Icons.menu,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
           ),

@@ -23,19 +23,30 @@ class _EventPageState extends State<EventPage> {
       child: Column(
         children: [
           Text('Selected Day: ${today.toString().split(' ')[0]}'),
-          Container(
-            child: TableCalendar(
-              locale: 'en_US',
-              rowHeight: 60,
-              headerStyle: const HeaderStyle(
-                  formatButtonVisible: false, titleCentered: true),
-              availableGestures: AvailableGestures.all,
-              selectedDayPredicate: (day) => isSameDay(day, today),
-              focusedDay: today,
-              firstDay: DateTime.utc(2010, 01, 01),
-              lastDay: DateTime.utc(2030, 31, 12),
-              onDaySelected: _onDaySelected,
+          TableCalendar(
+            locale: 'en_US',
+            rowHeight: 60,
+            calendarStyle: CalendarStyle(
+              selectedTextStyle:
+                  TextStyle(color: Theme.of(context).iconTheme.color),
+              todayTextStyle:
+                  TextStyle(color: Theme.of(context).iconTheme.color),
+              outsideDaysVisible: false,
+              weekendTextStyle:
+                  TextStyle(color: Theme.of(context).iconTheme.color),
+              weekNumberTextStyle:
+                  TextStyle(color: Theme.of(context).iconTheme.color),
             ),
+            headerStyle: const HeaderStyle(
+              formatButtonVisible: false,
+              titleCentered: true,
+            ),
+            availableGestures: AvailableGestures.all,
+            selectedDayPredicate: (day) => isSameDay(day, today),
+            focusedDay: today,
+            firstDay: DateTime.utc(2010, 01, 01),
+            lastDay: DateTime.utc(2030, 31, 12),
+            onDaySelected: _onDaySelected,
           ),
         ],
       ),

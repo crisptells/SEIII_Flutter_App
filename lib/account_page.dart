@@ -49,27 +49,29 @@ class AccountPage extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.center,
-            child: const CircleAvatar(
+            child: CircleAvatar(
               radius: profileHeight / 2,
-              backgroundColor: Colors.white,
-              backgroundImage: NetworkImage(
+              backgroundColor: Theme.of(context).backgroundColor,
+              backgroundImage: const NetworkImage(
                   'https://cdn-icons-png.flaticon.com/512/1946/1946429.png'),
             ),
           ),
           const SizedBox(
             height: 20,
           ),
-          const Text(
+          Text(
             'Student1',
             style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white),
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                color: Theme.of(context).iconTheme.color),
           ),
           const SizedBox(
             height: 10,
           ),
-          const Text(
+          Text(
             'student@mail.com',
-            style: TextStyle(color: Color.fromARGB(255, 201, 194, 194)),
+            style: TextStyle(color: Theme.of(context).iconTheme.color),
           ),
           const SizedBox(
             height: 20,
@@ -77,10 +79,12 @@ class AccountPage extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             margin: const EdgeInsets.all(20.0),
-            child: const Text(
+            child: Text(
               'Meine Kurse',
               style: TextStyle(
-                  fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).iconTheme.color),
             ),
           ),
           ListView.builder(

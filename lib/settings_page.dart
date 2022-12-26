@@ -19,13 +19,13 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
-        title: const Text(
+        backgroundColor: Theme.of(context).backgroundColor,
+        title: Text(
           'Einstellungen',
           style: TextStyle(
-            color: Color.fromARGB(255, 223, 233, 224),
+            color: Theme.of(context).iconTheme.color,
           ),
         ),
         automaticallyImplyLeading:
@@ -34,16 +34,17 @@ class _SettingsPageState extends State<SettingsPage> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
-            color: Color.fromARGB(255, 223, 233, 224),
+            color: Theme.of(context).iconTheme.color,
           ),
         ),
         actions: [
           Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.white),
+            data: Theme.of(context)
+                .copyWith(dividerColor: Theme.of(context).iconTheme.color),
             child: PopupMenuButton<int>(
-              color: const Color.fromRGBO(64, 75, 96, .9),
+              color: Theme.of(context).iconTheme.color,
               itemBuilder: (context) => [
                 PopupMenuItem<int>(
                   value: 0,
@@ -120,13 +121,13 @@ class _SettingsPageState extends State<SettingsPage> {
             const Divider(
               color: Colors.white,
             ),
-            Container(
-            ),
+            Container(),
           ],
         ),
       ),
     );
   }
+
   // ignore: non_constant_identifier_names
   SelectedItem(BuildContext context, int item) {
     switch (item) {
@@ -135,8 +136,8 @@ class _SettingsPageState extends State<SettingsPage> {
             MaterialPageRoute(builder: (context) => const SettingsPage()));
         break;
       case 1:
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const PolicyPage()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const PolicyPage()));
         break;
       case 2:
         Navigator.of(context).push(MaterialPageRoute(

@@ -49,12 +49,6 @@ class _MyAppState extends State<MyApp> {
         },
       ),
     );
-    /**  return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-      home: const RootPage(),
-    );
-    */
   }
 }
 
@@ -91,8 +85,8 @@ class _RootPageState extends State<RootPage> {
       appBar: AppBar(
         title: Text(
           'StudyRight',
-          style: TextStyle(
-              color: Theme.of(context).colorScheme.secondary, fontSize: 26),
+          style:
+              TextStyle(color: Theme.of(context).iconTheme.color, fontSize: 26),
         ),
         backgroundColor: Theme.of(context).backgroundColor,
         actions: [
@@ -107,14 +101,14 @@ class _RootPageState extends State<RootPage> {
                   child: Row(
                     children: [
                       Icon(Icons.settings,
-                          color: Theme.of(context).colorScheme.secondary),
+                          color: Theme.of(context).iconTheme.color),
                       const SizedBox(
                         width: 7,
                       ),
                       Text(
                         'Settings',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       ),
                     ],
@@ -126,14 +120,14 @@ class _RootPageState extends State<RootPage> {
                   child: Row(
                     children: [
                       Icon(Icons.policy,
-                          color: Theme.of(context).colorScheme.secondary),
+                          color: Theme.of(context).iconTheme.color),
                       const SizedBox(
                         width: 7,
                       ),
                       Text(
                         'Policy',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       )
                     ],
@@ -146,7 +140,7 @@ class _RootPageState extends State<RootPage> {
                     children: [
                       Icon(
                         Icons.logout,
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Theme.of(context).iconTheme.color,
                       ),
                       const SizedBox(
                         width: 7,
@@ -154,9 +148,29 @@ class _RootPageState extends State<RootPage> {
                       Text(
                         'Logout',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       )
+                    ],
+                  ),
+                ),
+                const PopupMenuDivider(),
+                PopupMenuItem<int>(
+                  value: 3,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.dark_mode,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Checkbox(
+                          value: themeChange.darkTheme,
+                          onChanged: (value) {
+                            themeChange.darkTheme = value!;
+                          }),
                     ],
                   ),
                 ),
@@ -164,7 +178,7 @@ class _RootPageState extends State<RootPage> {
               onSelected: (item) => SelectedItem(context, item),
               icon: Icon(
                 Icons.menu,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
           ),
@@ -183,16 +197,13 @@ class _RootPageState extends State<RootPage> {
 
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
+        backgroundColor: Theme.of(context).backgroundColor,
         mouseCursor: SystemMouseCursors.grab,
-        selectedIconTheme:
-            const IconThemeData(color: Colors.white, size: 30), // Icon Color
-        selectedItemColor:
-            const Color.fromARGB(255, 255, 255, 255), // Text Color
+        selectedIconTheme: Theme.of(context).iconTheme, // Icon Color
+        selectedItemColor: Theme.of(context).indicatorColor, // Text Color
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        unselectedIconTheme:
-            const IconThemeData(color: Color.fromARGB(255, 189, 190, 189)),
-        unselectedItemColor: const Color.fromARGB(255, 189, 190, 189),
+        unselectedIconTheme: Theme.of(context).iconTheme,
+        unselectedItemColor: Theme.of(context).disabledColor,
         showSelectedLabels: true, // Label von Navigation bar zeigen oder nicht
         showUnselectedLabels: true,
         items: const <BottomNavigationBarItem>[
@@ -243,48 +254,49 @@ class _RootPageState extends State<RootPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
-          title: const Text(
+          backgroundColor: Theme.of(context).backgroundColor,
+          title: Text(
             'Kurs hinzufügen',
-            style: TextStyle(color: Colors.white, fontSize: 24),
+            style: TextStyle(
+                color: Theme.of(context).iconTheme.color, fontSize: 24),
           ),
           content: SizedBox(
             height: 230,
             child: Column(
-              children: const [
+              children: [
                 Text(
                   'Kurs:                                                            ',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).iconTheme.color,
                       fontSize: 14,
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextField(
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
+                  style: TextStyle(color: Theme.of(context).iconTheme.color),
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Text(
                   'Dozent:                                                      ',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).iconTheme.color,
                       fontSize: 14,
                       fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextField(
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
+                  style: TextStyle(color: Theme.of(context).iconTheme.color),
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -295,11 +307,14 @@ class _RootPageState extends State<RootPage> {
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
-                backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
+                backgroundColor: Theme.of(context).backgroundColor,
               ),
-              child: const Text(
+              child: Text(
                 'Zurück',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: Theme.of(context).iconTheme.color,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -307,13 +322,16 @@ class _RootPageState extends State<RootPage> {
             ),
             TextButton(
               style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-                backgroundColor: const Color.fromRGBO(
-                    64, 75, 96, .9), // heller Color.fromRGBO(64, 75, 96, .9)
-              ), // dunkler Color.fromRGBO(58, 66, 86, 1)
-              child: const Text(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                  backgroundColor: Theme.of(context).backgroundColor
+                  //Color.fromRGBO(64, 75, 96, .9), // heller Color.fromRGBO(64, 75, 96, .9)
+                  ), // dunkler Color.fromRGBO(58, 66, 86, 1)
+              child: Text(
                 'Hinzufügen',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: Theme.of(context).iconTheme.color,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
               ),
               onPressed: () {
                 Navigator.of(context).pop();

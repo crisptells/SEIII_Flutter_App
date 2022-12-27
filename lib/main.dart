@@ -63,12 +63,12 @@ class _RootPageState extends State<RootPage> {
   int currentPage = 0;
   List<String> dropList = <String>['Eins', 'Zwei', 'Drei'];
 
-  List<Widget> pages = const [
+  List<Widget> pages = [
     // Liste aller Seiten
-    HomePage(), // 0
+    const HomePage(), // 0
     NachhilfePage(),
-    EventPage(),
-    AccountPage(),
+    const EventPage(),
+    const AccountPage(),
   ];
 
   void _onItemTapped(int index) {

@@ -95,10 +95,9 @@ class _RootPageState extends State<RootPage> {
         backgroundColor: Theme.of(context).backgroundColor,
         actions: [
           Theme(
-            data: Theme.of(context)
-                .copyWith(dividerColor: Theme.of(context).hintColor),
+            data: Theme.of(context).copyWith(dividerColor: Theme.of(context).hintColor),
             child: PopupMenuButton<int>(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).backgroundColor,
               itemBuilder: (context) => [
                 PopupMenuItem<int>(
                   value: 0,
@@ -280,8 +279,10 @@ class _RootPageState extends State<RootPage> {
                 ),
                 TextField(
                   style: TextStyle(color: Theme.of(context).iconTheme.color),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  cursorColor: Theme.of(context).iconTheme.color,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),    
+                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).iconTheme.color!)),          
                   ),
                 ),
                 const SizedBox(
@@ -300,8 +301,10 @@ class _RootPageState extends State<RootPage> {
                 ),
                 TextField(
                   style: TextStyle(color: Theme.of(context).iconTheme.color),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  cursorColor: Theme.of(context).iconTheme.color,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).iconTheme.color!)),
                   ),
                 ),
               ],

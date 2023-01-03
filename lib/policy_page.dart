@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_test_app/http_insertNewUserTest.dart';
 import 'package:flutter_test_app/login_out_page.dart';
 import 'package:flutter_test_app/settings_page.dart';
+import 'package:flutter_test_app/theme.dart';
+import 'package:provider/provider.dart';
 
 //import 'learn_flutter_page.dart';
 
@@ -18,14 +20,15 @@ class _PolicyPageState extends State<PolicyPage> {
   bool? isCheckBox = false;
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
-        title: const Text(
-          'Policy',
+        backgroundColor: Theme.of(context).backgroundColor,
+        title: Text(
+          'Impressum',
           style: TextStyle(
-            color: Color.fromARGB(255, 223, 233, 224),
+            color: Theme.of(context).iconTheme.color,
           ),
         ),
         automaticallyImplyLeading:
@@ -34,29 +37,31 @@ class _PolicyPageState extends State<PolicyPage> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
-            color: Color.fromARGB(255, 223, 233, 224),
+            color: Theme.of(context).iconTheme.color,
           ),
         ),
         actions: [
           Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.white),
+            data: Theme.of(context)
+                .copyWith(dividerColor: Theme.of(context).hintColor),
             child: PopupMenuButton<int>(
-              color: const Color.fromRGBO(64, 75, 96, .9),
+              color: Theme.of(context).primaryColor,
               itemBuilder: (context) => [
                 PopupMenuItem<int>(
                   value: 0,
                   child: Row(
-                    children: const [
-                      Icon(Icons.settings, color: Colors.white),
-                      SizedBox(
+                    children: [
+                      Icon(Icons.settings,
+                          color: Theme.of(context).iconTheme.color),
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
-                        'Settings',
+                        'Einstellungen',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       ),
                     ],
@@ -66,15 +71,16 @@ class _PolicyPageState extends State<PolicyPage> {
                 PopupMenuItem<int>(
                   value: 1,
                   child: Row(
-                    children: const [
-                      Icon(Icons.policy, color: Colors.white),
-                      SizedBox(
+                    children: [
+                      Icon(Icons.policy,
+                          color: Theme.of(context).iconTheme.color),
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
-                        'Policy',
+                        'Impressum',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       )
                     ],
@@ -84,28 +90,48 @@ class _PolicyPageState extends State<PolicyPage> {
                 PopupMenuItem<int>(
                   value: 2,
                   child: Row(
-                    children: const [
+                    children: [
                       Icon(
                         Icons.logout,
-                        color: Colors.white,
+                        color: Theme.of(context).iconTheme.color,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
-                        'Logout',
+                        'Login/Logout',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       )
                     ],
                   ),
                 ),
+                const PopupMenuDivider(),
+                PopupMenuItem<int>(
+                  value: 3,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.dark_mode,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Checkbox(
+                          value: themeChange.darkTheme,
+                          onChanged: (value) {
+                            themeChange.darkTheme = value!;
+                          }),
+                    ],
+                  ),
+                ),
               ],
               onSelected: (item) => SelectedItem(context, item),
-              icon: const Icon(
+              icon: Icon(
                 Icons.menu,
-                color: Colors.white,
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
           ),
@@ -117,10 +143,105 @@ class _PolicyPageState extends State<PolicyPage> {
             const SizedBox(
               height: 10,
             ),
-            const Divider(
-              color: Colors.white,
+            Divider(
+              color: Theme.of(context).iconTheme.color,
             ),
-            Container(),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                'StudyRight',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                    color: Theme.of(context).iconTheme.color),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                'Luis Maier, Christian Reitmeier',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Theme.of(context).iconTheme.color),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                'Coblitzallee 1-9',
+                style: TextStyle(
+                    fontSize: 16, color: Theme.of(context).iconTheme.color),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                '68163 Mannheim',
+                style: TextStyle(
+                    fontSize: 16, color: Theme.of(context).iconTheme.color),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                'Deutschland',
+                style: TextStyle(
+                    fontSize: 16, color: Theme.of(context).iconTheme.color),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                'Kontakt',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Theme.of(context).iconTheme.color),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                'Telefon: 0621 41050',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).iconTheme.color),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                'E-Mail: luis.maier@gmx.de',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).iconTheme.color),
+              ),
+            ),
           ],
         ),
       ),

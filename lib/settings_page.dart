@@ -3,6 +3,8 @@ import 'package:flutter_test_app/http_getAllUsersTest.dart';
 import 'package:flutter_test_app/http_insertNewUserTest.dart';
 import 'package:flutter_test_app/login_out_page.dart';
 import 'package:flutter_test_app/policy_page.dart';
+import 'package:flutter_test_app/theme.dart';
+import 'package:provider/provider.dart';
 
 import 'learn_flutter_page.dart';
 
@@ -13,11 +15,13 @@ class SettingsPage extends StatefulWidget {
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
+
 class _SettingsPageState extends State<SettingsPage> {
   bool isSwitch = false;
   bool? isCheckBox = false;
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -42,22 +46,23 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: [
           Theme(
             data: Theme.of(context)
-                .copyWith(dividerColor: Theme.of(context).iconTheme.color),
+                .copyWith(dividerColor: Theme.of(context).hintColor),
             child: PopupMenuButton<int>(
-              color: Theme.of(context).iconTheme.color,
+              color: Theme.of(context).primaryColor,
               itemBuilder: (context) => [
                 PopupMenuItem<int>(
                   value: 0,
                   child: Row(
-                    children: const [
-                      Icon(Icons.settings, color: Colors.white),
-                      SizedBox(
+                    children: [
+                      Icon(Icons.settings,
+                          color: Theme.of(context).iconTheme.color),
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
-                        'Settings',
+                        'Einstellungen',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       ),
                     ],
@@ -67,15 +72,16 @@ class _SettingsPageState extends State<SettingsPage> {
                 PopupMenuItem<int>(
                   value: 1,
                   child: Row(
-                    children: const [
-                      Icon(Icons.policy, color: Colors.white),
-                      SizedBox(
+                    children: [
+                      Icon(Icons.policy,
+                          color: Theme.of(context).iconTheme.color),
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
-                        'Policy',
+                        'Impressum',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       )
                     ],
@@ -85,28 +91,48 @@ class _SettingsPageState extends State<SettingsPage> {
                 PopupMenuItem<int>(
                   value: 2,
                   child: Row(
-                    children: const [
+                    children: [
                       Icon(
                         Icons.logout,
-                        color: Colors.white,
+                        color: Theme.of(context).iconTheme.color,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
-                        'Logout',
+                        'Login/Logout',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       )
                     ],
                   ),
                 ),
+                const PopupMenuDivider(),
+                PopupMenuItem<int>(
+                  value: 3,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.dark_mode,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Checkbox(
+                          value: themeChange.darkTheme,
+                          onChanged: (value) {
+                            themeChange.darkTheme = value!;
+                          }),
+                    ],
+                  ),
+                ),
               ],
               onSelected: (item) => SelectedItem(context, item),
-              icon: const Icon(
+              icon: Icon(
                 Icons.menu,
-                color: Colors.white,
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
           ),
@@ -118,8 +144,8 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(
               height: 10,
             ),
-            const Divider(
-              color: Colors.white,
+            Divider(
+              color: Theme.of(context).iconTheme.color,
             ),
             Container(),
           ],

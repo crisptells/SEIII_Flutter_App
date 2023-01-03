@@ -54,10 +54,6 @@ class NachhilfePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text("ListView with Tutorings"),
-          centerTitle: true,
-        ),
         body: Center(
             child: FutureBuilder<List<Tutoring>>(
           future: tutoringsFuture,

@@ -3,6 +3,8 @@ import 'package:flutter_test_app/http_getAllUsersTest.dart';
 import 'package:flutter_test_app/http_insertNewUserTest.dart';
 import 'package:flutter_test_app/policy_page.dart';
 import 'package:flutter_test_app/settings_page.dart';
+import 'package:flutter_test_app/theme.dart';
+import 'package:provider/provider.dart';
 
 import 'learn_flutter_page.dart';
 
@@ -18,14 +20,15 @@ class _LoginPageState extends State<LoginPage> {
   bool? isCheckBox = false;
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(58, 66, 86, 1),
-        title: const Text(
-          'Login',
+        backgroundColor: Theme.of(context).backgroundColor,
+        title: Text(
+          'Login/Logout',
           style: TextStyle(
-            color: Color.fromARGB(255, 223, 233, 224),
+            color: Theme.of(context).iconTheme.color,
           ),
         ),
         automaticallyImplyLeading:
@@ -34,29 +37,31 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
-            color: Color.fromARGB(255, 223, 233, 224),
+            color: Theme.of(context).iconTheme.color,
           ),
         ),
         actions: [
           Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.white),
+            data: Theme.of(context)
+                .copyWith(dividerColor: Theme.of(context).hintColor),
             child: PopupMenuButton<int>(
-              color: const Color.fromRGBO(64, 75, 96, .9),
+              color: Theme.of(context).primaryColor,
               itemBuilder: (context) => [
                 PopupMenuItem<int>(
                   value: 0,
                   child: Row(
-                    children: const [
-                      Icon(Icons.settings, color: Colors.white),
-                      SizedBox(
+                    children: [
+                      Icon(Icons.settings,
+                          color: Theme.of(context).iconTheme.color),
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
-                        'Settings',
+                        'Einstellungen',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       ),
                     ],
@@ -66,15 +71,16 @@ class _LoginPageState extends State<LoginPage> {
                 PopupMenuItem<int>(
                   value: 1,
                   child: Row(
-                    children: const [
-                      Icon(Icons.policy, color: Colors.white),
-                      SizedBox(
+                    children: [
+                      Icon(Icons.policy,
+                          color: Theme.of(context).iconTheme.color),
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
-                        'Policy',
+                        'Impressum',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       )
                     ],
@@ -84,28 +90,48 @@ class _LoginPageState extends State<LoginPage> {
                 PopupMenuItem<int>(
                   value: 2,
                   child: Row(
-                    children: const [
+                    children: [
                       Icon(
                         Icons.logout,
-                        color: Colors.white,
+                        color: Theme.of(context).iconTheme.color,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 7,
                       ),
                       Text(
-                        'Logout',
+                        'Login/Logout',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                       )
                     ],
                   ),
                 ),
+                const PopupMenuDivider(),
+                PopupMenuItem<int>(
+                  value: 3,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.dark_mode,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Checkbox(
+                          value: themeChange.darkTheme,
+                          onChanged: (value) {
+                            themeChange.darkTheme = value!;
+                          }),
+                    ],
+                  ),
+                ),
               ],
               onSelected: (item) => SelectedItem(context, item),
-              icon: const Icon(
+              icon: Icon(
                 Icons.menu,
-                color: Colors.white,
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
           ),
@@ -117,16 +143,16 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 10,
             ),
-            const Divider(
-              color: Colors.white,
+            Divider(
+              color: Theme.of(context).iconTheme.color,
             ),
-            Container(
-            ),
+            Container(),
           ],
         ),
       ),
     );
   }
+
   // ignore: non_constant_identifier_names
   SelectedItem(BuildContext context, int item) {
     switch (item) {
@@ -135,8 +161,8 @@ class _LoginPageState extends State<LoginPage> {
             MaterialPageRoute(builder: (context) => const SettingsPage()));
         break;
       case 1:
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const PolicyPage()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const PolicyPage()));
         break;
       case 2:
         Navigator.of(context).push(MaterialPageRoute(

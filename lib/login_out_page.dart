@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: 7,
                       ),
                       Text(
-                        'Settings',
+                        'Einstellungen',
                         style: TextStyle(
                           color: Theme.of(context).iconTheme.color,
                         ),
@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: 7,
                       ),
                       Text(
-                        'Policy',
+                        'Impressunm',
                         style: TextStyle(
                           color: Theme.of(context).iconTheme.color,
                         ),
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: 7,
                       ),
                       Text(
-                        'Logout',
+                        'Login/Logout',
                         style: TextStyle(
                           color: Theme.of(context).iconTheme.color,
                         ),

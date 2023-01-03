@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/events_page.dart';
+import 'package:flutter_test_app/header_bar.dart';
 import 'package:flutter_test_app/home_page.dart';
 import 'package:flutter_test_app/account_page.dart';
+import 'package:flutter_test_app/login_out_page.dart';
 import 'package:flutter_test_app/nachhilfe_page.dart';
+import 'package:flutter_test_app/policy_page.dart';
 import 'package:flutter_test_app/settings_page.dart';
 import 'package:flutter_test_app/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'learn_flutter_page.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -230,7 +234,7 @@ class _RootPageState extends State<RootPage> {
     );
   }
 
-  // ignore: non_constant_identifier_names
+ // ignore: non_constant_identifier_names
   SelectedItem(BuildContext context, int item) {
     switch (item) {
       case 0:
@@ -239,12 +243,12 @@ class _RootPageState extends State<RootPage> {
         break;
       case 1:
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const LearnFlutterPage()));
+            MaterialPageRoute(builder: (context) => const PolicyPage()));
         break;
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                const LearnFlutterPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
+                const LoginPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
         break;
     }
   }

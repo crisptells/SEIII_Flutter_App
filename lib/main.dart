@@ -109,7 +109,7 @@ class _RootPageState extends State<RootPage> {
                         width: 7,
                       ),
                       Text(
-                        'Settings',
+                        'Einstellungen',
                         style: TextStyle(
                           color: Theme.of(context).iconTheme.color,
                         ),
@@ -128,7 +128,7 @@ class _RootPageState extends State<RootPage> {
                         width: 7,
                       ),
                       Text(
-                        'Policy',
+                        'Impressum',
                         style: TextStyle(
                           color: Theme.of(context).iconTheme.color,
                         ),
@@ -149,7 +149,7 @@ class _RootPageState extends State<RootPage> {
                         width: 7,
                       ),
                       Text(
-                        'Logout',
+                        'Login/Logout',
                         style: TextStyle(
                           color: Theme.of(context).iconTheme.color,
                         ),
@@ -191,10 +191,10 @@ class _RootPageState extends State<RootPage> {
           currentPage], // hier wird die Liste aufgerufen --> dann wird die entsprechende Seite angezeigt
       floatingActionButton: FloatingActionButton(
         onPressed: () => _dialogBuilder(context),
-        backgroundColor: const Color.fromRGBO(64, 75, 96, .9),
-        child: const Icon(
+        backgroundColor: Theme.of(context).backgroundColor,
+        child: Icon(
           Icons.add,
-          color: Colors.white,
+          color: Theme.of(context).iconTheme.color,
         ),
       ),
 

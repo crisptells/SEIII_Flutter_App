@@ -55,25 +55,30 @@ class NachhilfePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text("ListView with Tutorings"),
+          title: Text(
+            "Kurse",
+            style: TextStyle(color: Theme.of(context).backgroundColor),
+          ),
           centerTitle: true,
+          backgroundColor: Theme.of(context).iconTheme.color,
         ),
         body: Center(
-            child: FutureBuilder<List<Tutoring>>(
-          future: tutoringsFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Ahh error! ${snapshot.hasError}');
-            } else if (snapshot.hasData) {
-              final tutorings = snapshot.data!;
-              return buildTutorings(tutorings);
-            } else {
-              return const Text("no Tutorings data");
-            }
-          },
-        )),
+          child: FutureBuilder<List<Tutoring>>(
+            future: tutoringsFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Ahh error! ${snapshot.hasError}');
+              } else if (snapshot.hasData) {
+                final tutorings = snapshot.data!;
+                return buildTutorings(tutorings);
+              } else {
+                return const Text("no Tutorings data");
+              }
+            },
+          ),
+        ),
       );
 
   Widget buildTutorings(List<Tutoring> tutorings) => ListView.builder(

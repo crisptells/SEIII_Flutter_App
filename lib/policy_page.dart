@@ -141,7 +141,7 @@ class _PolicyPageState extends State<PolicyPage> {
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                const LoginPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
+                LoginPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
         break;
     }
   }

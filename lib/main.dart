@@ -12,19 +12,18 @@ import 'package:provider/provider.dart';
 
 import 'learn_flutter_page.dart';
 
-
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  //const MyApp({super.key});
+  const MyApp({super.key});
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
+  DarkThemeProvider themeChangeProvider = DarkThemeProvider();
 
   @override
   void initState() {
@@ -95,7 +94,8 @@ class _RootPageState extends State<RootPage> {
         backgroundColor: Theme.of(context).backgroundColor,
         actions: [
           Theme(
-            data: Theme.of(context).copyWith(dividerColor: Theme.of(context).hintColor),
+            data: Theme.of(context)
+                .copyWith(dividerColor: Theme.of(context).hintColor),
             child: PopupMenuButton<int>(
               color: Theme.of(context).backgroundColor,
               itemBuilder: (context) => [
@@ -233,7 +233,7 @@ class _RootPageState extends State<RootPage> {
     );
   }
 
- // ignore: non_constant_identifier_names
+  // ignore: non_constant_identifier_names
   SelectedItem(BuildContext context, int item) {
     switch (item) {
       case 0:
@@ -241,13 +241,13 @@ class _RootPageState extends State<RootPage> {
             MaterialPageRoute(builder: (context) => const SettingsPage()));
         break;
       case 1:
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const PolicyPage()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const PolicyPage()));
         break;
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                const LoginPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
+                LoginPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
         break;
     }
   }
@@ -281,8 +281,10 @@ class _RootPageState extends State<RootPage> {
                   style: TextStyle(color: Theme.of(context).iconTheme.color),
                   cursorColor: Theme.of(context).iconTheme.color,
                   decoration: InputDecoration(
-                    border: const OutlineInputBorder(),    
-                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).iconTheme.color!)),          
+                    border: const OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Theme.of(context).iconTheme.color!)),
                   ),
                 ),
                 const SizedBox(
@@ -304,7 +306,9 @@ class _RootPageState extends State<RootPage> {
                   cursorColor: Theme.of(context).iconTheme.color,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).iconTheme.color!)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Theme.of(context).iconTheme.color!)),
                   ),
                 ),
               ],

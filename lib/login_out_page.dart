@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/policy_page.dart';
+import 'package:flutter_test_app/services/storage_manager.dart';
 import 'package:flutter_test_app/settings_page.dart';
 import 'package:flutter_test_app/theme.dart';
 import 'package:http/http.dart';
@@ -26,10 +27,15 @@ class _LoginPageState extends State<LoginPage> {
               <String, String>{"email": email, "password": password}));
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
-        print(data['token']);
+        StorageManager.saveData('loggedInUser', email);
         print('Login successfully');
+        Navigator.pop(context);
+        StorageManager.readData('loggedInUser').then((value) {
+          print('user read from storage: $value');
+        });
       } else {
-        print('failed');
+        //Show some message
+        print('failed to login');
       }
     } catch (e) {
       print(e.toString());
@@ -38,9 +44,11 @@ class _LoginPageState extends State<LoginPage> {
 
   bool isSwitch = false;
   bool? isCheckBox = false;
+  bool obscureText = true;
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -96,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: 7,
                       ),
                       Text(
-                        'Impressunm',
+                        'Impressum',
                         style: TextStyle(
                           color: Theme.of(context).iconTheme.color,
                         ),
@@ -172,13 +180,21 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 20,
             ),
-            TextFormField(
+            TextField(
               controller: passwordController,
+              obscureText: obscureText, //toggel if text is hidden
               decoration: InputDecoration(
-                  hintText: 'Password',
-                  hintStyle:
-                      TextStyle(color: Theme.of(context).iconTheme.color)),
-              style: TextStyle(color: Theme.of(context).iconTheme.color),
+                labelText: 'Password',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                      !obscureText ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      obscureText = !obscureText;
+                    });
+                  },
+                ),
+              ),
             ),
             const SizedBox(
               height: 40,

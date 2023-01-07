@@ -248,7 +248,7 @@ class _RootPageState extends State<RootPage> {
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                const LoginPage()));
+                LoginPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
         break;
     }
   }

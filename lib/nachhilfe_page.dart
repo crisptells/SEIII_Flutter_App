@@ -4,9 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/datattypes/datatypes.dart';
 
+
 class NachhilfePage extends StatelessWidget {
-  //const NachhilfePage({super.key});
-  //get all Tutorings in a List
   Future<List<Tutoring>> tutoringsFuture = getTutorings();
 
   NachhilfePage({super.key});

@@ -245,19 +245,12 @@ class _AccountPageState extends State<AccountPage> {
 
     //Use store manager to read logged in user
     StorageManager.readData('loggedInUser').then((value) {
-      print("value " + value);
       userEmail = value;
     });
 
     //Send Get User request to backend with email of logged in user
     Response response = await post(Uri.parse('http://127.0.0.1:3333/User'),
         body: jsonEncode(<String, String>{"email": "luis.maier@gmx.de2"}));
-
-    if (response.statusCode == 200) {
-      print("yay");
-    } else {
-      print("nay");
-    }
 
     var body = json.decode(response.body);
     return User.fromJson(body);

@@ -76,7 +76,7 @@ class UserExp {
     //required this.cash
   });
 
-  static UserExp fromJson(json) => UserExp(
+  factory UserExp.fromJson(Map<String, dynamic> json) => UserExp(
         user_email: json['user_email'].toString(),
         math: json['math'],
         german: json['german'],
@@ -85,7 +85,6 @@ class UserExp {
         chemistry: json['chemistry'],
         informatics: json['informatics'],
       );
-
   /** 
   factory Tutoring.fromJson(Map<String, dynamic> json) {
     return Tutoring(

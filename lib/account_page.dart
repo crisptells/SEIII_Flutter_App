@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_test_app/services/storage_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:line_icons/line_icons.dart';
@@ -262,13 +261,10 @@ class _AccountPageState extends State<AccountPage> {
   Future<UserExp> userExpesFuture = getUserExp();
   //Muss hieraus post machen und wieder user email mitgeben
   static Future<UserExp> getUserExp() async {
+    //Use store manager to read logged in user
     var prefs = await SharedPreferences.getInstance();
     String userEmail = prefs.getString('loggedInUser')!;
-    //Use store manager to read logged in user
-    //StorageManager.readData('loggedInUser').then((value) {
-    //  userEmail = value;
-    //  print(userEmail);
-    //});
+    //Send request to backend
     print(userEmail);
     final response = await http.post(Uri.parse("http://127.0.0.1:3333/UserExp"),
         body: jsonEncode(<String, String>{
@@ -282,13 +278,9 @@ class _AccountPageState extends State<AccountPage> {
   Future<User> userFuture = getUser();
   //Method to retrieve user data
   static Future<User> getUser() async {
+    //Use store manager to read logged in user
     var prefs = await SharedPreferences.getInstance();
     String userEmail = prefs.getString('loggedInUser')!;
-
-    //Use store manager to read logged in user
-    //StorageManager.readData('loggedInUser').then((value) {
-    //  userEmail = value;
-    //});
 
     //Send Get User request to backend with email of logged in user
     final response = await post(Uri.parse('http://127.0.0.1:3333/User'),

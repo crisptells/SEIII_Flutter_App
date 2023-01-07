@@ -111,7 +111,7 @@ Widget buildExp(UserExp userExps, BuildContext context) {
           decoration: BoxDecoration(
               border: Border(
                   right: BorderSide(
-                      width: 1.0, color: Theme.of(context).disabledColor!))),
+                      width: 1.0, color: Theme.of(context).disabledColor))),
           child: const Icon(Icons.book, color: Colors.white),
         ),
         title: const Text(

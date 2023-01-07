@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_test_app/services/storage_manager.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'datattypes/datatypes.dart';
 
 final makeListTile = ListTile(
   contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -12,8 +18,6 @@ final makeListTile = ListTile(
     "Kurs für Nachhilfe",
     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
   ),
-  // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-
   subtitle: Row(
     children: const <Widget>[
       Icon(Icons.linear_scale, color: Colors.yellowAccent),
@@ -35,12 +39,58 @@ final makeCard = Card(
 
 const int itemCount = 20;
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
+
+  @override
+  State<AccountPage> createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
+  //Variable declaration
+  String name = "";
+  String vorName = "";
+  var geld;
+
+  //Calling the method to get user data
+  @override
+  void initState() {
+    getUser();
+  }
+
+  //Method to retrieve user data
+  getUser() async {
+    var userEmail = "";
+    //Use store manager to read logged in user
+    //TODO fix: Storage manager braucht zu lange, deswegen hat userEmail keinen wert!
+    StorageManager.readData('loggedInUser').then((value) async {
+      print("value " + value);
+      userEmail = value;
+      Future.delayed(const Duration(seconds: 2), () => "someText");
+    });
+    print("userEmail " + userEmail);
+    //Send Get User request to backend with email of logged in user
+    String userEmailString = jsonEncode(<String, String>{"email": userEmail});
+    print(userEmailString);
+    Response response = await post(Uri.parse('http://127.0.0.1:3333/User'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{'email': userEmailString}));
+    if (response.statusCode == 200) {
+      var responseJSON = json.decode(response.body);
+      name = responseJSON['name'];
+      vorName = responseJSON['firstname'];
+      geld = responseJSON['cash'];
+    } else {
+      print('failed to retrieve user data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     const double profileHeight = 144;
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -60,7 +110,7 @@ class AccountPage extends StatelessWidget {
             height: 20,
           ),
           Text(
-            'Student1',
+            name + vorName,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
@@ -70,7 +120,7 @@ class AccountPage extends StatelessWidget {
             height: 10,
           ),
           Text(
-            'student@mail.com',
+            "userEmail",
             style: TextStyle(color: Theme.of(context).iconTheme.color),
           ),
           const SizedBox(

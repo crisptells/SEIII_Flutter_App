@@ -71,7 +71,7 @@ class _RootPageState extends State<RootPage> {
     const HomePage(), // 0
     NachhilfePage(),
     const EventPage(),
-    const AccountPage(),
+    AccountPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -245,9 +245,8 @@ class _RootPageState extends State<RootPage> {
             .push(MaterialPageRoute(builder: (context) => const PolicyPage()));
         break;
       case 2:
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                LoginPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const LoginPage()));
         break;
     }
   }

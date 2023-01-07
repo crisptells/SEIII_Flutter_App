@@ -1,42 +1,48 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_test_app/login_out_page.dart';
 import 'package:flutter_test_app/policy_page.dart';
 import 'package:flutter_test_app/services/storage_manager.dart';
 import 'package:flutter_test_app/settings_page.dart';
-import 'package:flutter_test_app/signup_page.dart';
 import 'package:flutter_test_app/theme.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  //hah
-  void login(String email, password) async {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController firstnameController = TextEditingController();
+
+  void signup(String email, password, name, firstname) async {
     try {
-      Response response = await post(
-          Uri.parse('http://127.0.0.1:3333/LoginUser'),
-          body: jsonEncode(
-              <String, String>{"email": email, "password": password}));
-      if (response.statusCode == 200) {
+      Response response = await post(Uri.parse('http://127.0.0.1:3333/AddUser'),
+          body: jsonEncode(<String, String>{
+            "email": email,
+            "password": password,
+            "name": name,
+            "firstName": firstname,
+            "cash": "0"
+          }));
+      if (response.statusCode == 201) {
         var data = jsonDecode(response.body.toString());
         StorageManager.saveData('loggedInUser', email);
-        print('Login successfully');
+        print('SignUp successfully, now logged in');
         Navigator.pop(context);
         StorageManager.readData('loggedInUser').then((value) {
           print('user read from storage: $value');
         });
       } else {
         //Show some message
-        print('failed to login');
+        print('failed to SignUp');
       }
     } catch (e) {
       print(e.toString());
@@ -54,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text(
-          'Anmelden',
+          'Registrieren',
           style:
               TextStyle(color: Theme.of(context).iconTheme.color, fontSize: 26),
         ),
@@ -170,16 +176,31 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 20), //Abstandshalter
             TextField(
-              controller: emailController,
+              controller: nameController,
+              decoration: InputDecoration(
+                  labelText: 'Name',
+                  labelStyle:
+                      TextStyle(color: Theme.of(context).iconTheme.color)),
+            ),
+            const SizedBox(height: 20), //Abstandshalter
+            TextField(
+              controller: firstnameController,
+              decoration: InputDecoration(
+                  labelText: 'Vorname',
+                  labelStyle:
+                      TextStyle(color: Theme.of(context).iconTheme.color)),
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              controller: emailController, //toggel if text is hidden
               decoration: InputDecoration(
                   labelText: 'Email',
                   labelStyle:
                       TextStyle(color: Theme.of(context).iconTheme.color)),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20), //Abstandshalter
             TextField(
               controller: passwordController,
               obscureText: obscureText, //toggel if text is hidden
@@ -197,14 +218,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 40),
             GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                login(emailController.text.toString(),
-                    passwordController.text.toString());
+                signup(
+                    emailController.text.toString(),
+                    passwordController.text.toString(),
+                    nameController.text.toString(),
+                    firstnameController.text.toString());
               },
               child: Container(
                 height: 50,
@@ -212,22 +234,9 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(10)),
                 child: const Center(
-                  child: Text('Login'),
+                  child: Text('Registrieren'),
                 ),
               ),
-            ),
-            const Text('Noch keinen Account?'),
-            TextButton(
-              child: const Text(
-                'Registrieren',
-                style: TextStyle(fontSize: 20, color: Colors.blue),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignUpPage()),
-                );
-              },
             )
           ],
         ),

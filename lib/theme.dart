@@ -49,8 +49,7 @@ class Styles {
           isDarkTheme ? const Color(0xff3A3A3B) : const Color(0xff4285F4),
       focusColor:
           isDarkTheme ? const Color(0xff0B2512) : const Color(0xffA8DAB5),
-      disabledColor:
-          isDarkTheme ? Color.fromARGB(255, 189, 190, 189) : Color(0xff3A3A3B),
+      disabledColor: isDarkTheme ? Colors.white24 : Colors.white24,
       cardColor: isDarkTheme ? const Color(0xFF151515) : Colors.white,
       canvasColor: isDarkTheme ? Colors.black : Colors.grey[50],
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,

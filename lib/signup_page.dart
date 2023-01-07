@@ -34,6 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
           }));
       if (response.statusCode == 201) {
         var data = jsonDecode(response.body.toString());
+        print(data);
         StorageManager.saveData('loggedInUser', email);
         print('SignUp successfully, now logged in');
         Navigator.pop(context);
@@ -41,7 +42,6 @@ class _SignUpPageState extends State<SignUpPage> {
           print('user read from storage: $value');
         });
       } else {
-        //Show some message
         print('failed to SignUp');
       }
     } catch (e) {

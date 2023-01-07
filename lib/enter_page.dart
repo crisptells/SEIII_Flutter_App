@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_test_app/http_getAllUsersTest.dart';
-//import 'package:flutter_test_app/http_insertNewUserTest.dart';
+import 'package:flutter_test_app/http_getAllUsersTest.dart';
+import 'package:flutter_test_app/http_insertNewUserTest.dart';
 import 'package:flutter_test_app/login_out_page.dart';
+import 'package:flutter_test_app/policy_page.dart';
 import 'package:flutter_test_app/settings_page.dart';
 import 'package:flutter_test_app/theme.dart';
 import 'package:provider/provider.dart';
 
-//import 'learn_flutter_page.dart';
+import 'learn_flutter_page.dart';
 
-class PolicyPage extends StatefulWidget {
-  const PolicyPage({super.key});
-
+// ignore: must_be_immutable
+class EnterPage extends StatefulWidget {
+  String subject;
+  String tutor;
+  EnterPage({super.key, required this.subject, required this.tutor});
   @override
-  State<PolicyPage> createState() => _PolicyPageState();
+  // ignore: no_logic_in_create_state
+  State<EnterPage> createState() => _EnterPageState(subject, tutor);
 }
 
-class _PolicyPageState extends State<PolicyPage> {
+class _EnterPageState extends State<EnterPage> {
+  String subject;
+  String tutor;
+  _EnterPageState(this.subject, this.tutor);
   bool isSwitch = false;
   bool? isCheckBox = false;
   @override
@@ -26,7 +33,7 @@ class _PolicyPageState extends State<PolicyPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
         title: Text(
-          'Impressum',
+          'Einschreiben',
           style: TextStyle(
             color: Theme.of(context).iconTheme.color,
           ),
@@ -151,8 +158,9 @@ class _PolicyPageState extends State<PolicyPage> {
             ),
             Container(
               alignment: Alignment.center,
+              margin: const EdgeInsets.all(20.0),
               child: Text(
-                'StudyRight',
+                'Kurs',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
@@ -160,95 +168,83 @@ class _PolicyPageState extends State<PolicyPage> {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             Container(
-              alignment: Alignment.center,
+              margin: const EdgeInsets.all(20.0),
+              alignment: Alignment.topLeft,
               child: Text(
-                'Luis Maier, Christian Reitmeier',
+                'Fach: $subject',
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Theme.of(context).iconTheme.color),
+                    fontSize: 16, color: Theme.of(context).iconTheme.color),
               ),
             ),
             const SizedBox(
               height: 10,
             ),
             Container(
-              alignment: Alignment.center,
+              margin: const EdgeInsets.all(20.0),
+              alignment: Alignment.topLeft,
               child: Text(
-                'Coblitzallee 1-9',
+                'Dozent: $tutor',
                 style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).iconTheme.color),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                '68163 Mannheim',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).iconTheme.color),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                'Deutschland',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).iconTheme.color),
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                'Kontakt',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Theme.of(context).iconTheme.color),
+                    fontSize: 16, color: Theme.of(context).iconTheme.color),
               ),
             ),
             const SizedBox(
               height: 10,
             ),
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                'Telefon: 0621 41050',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).iconTheme.color),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                'E-Mail: luis.maier@gmx.de',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).iconTheme.color),
-              ),
-            ),
+            Builder(builder: (context) {
+              return Container(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: 400,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).iconTheme.color,
+                    ),
+                    onPressed: () => showActionSnackbar(context),
+                    child: Text(
+                      "Einschreiben",
+                      style: TextStyle(
+                          color: Theme.of(context).backgroundColor,
+                          fontSize: 16),
+                    ),
+                  ),
+                ),
+              );
+            }),
           ],
         ),
       ),
     );
+  }
+
+  void showActionSnackbar(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Row(
+        children: const [
+          Text(
+            "Erfolgreich eingeschrieben! ",
+            style: TextStyle(fontSize: 16),
+          ),
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        ],
+      ),
+      action: SnackBarAction(
+        label: " ",
+        onPressed: () {
+          print("SnackBar Action");
+        },
+      ),
+      duration: const Duration(seconds: 3),
+      behavior: SnackBarBehavior.floating,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   // ignore: non_constant_identifier_names
@@ -265,7 +261,7 @@ class _PolicyPageState extends State<PolicyPage> {
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                const LoginPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
+                LoginPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
         break;
     }
   }

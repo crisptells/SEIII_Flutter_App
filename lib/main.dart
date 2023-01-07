@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_app/enter_page.dart';
 import 'package:flutter_test_app/events_page.dart';
 import 'package:flutter_test_app/header_bar.dart';
 import 'package:flutter_test_app/home_page.dart';
@@ -71,7 +72,7 @@ class _RootPageState extends State<RootPage> {
     const HomePage(), // 0
     NachhilfePage(),
     const EventPage(),
-    const AccountPage(),
+    AccountPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -247,7 +248,7 @@ class _RootPageState extends State<RootPage> {
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                LoginPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
+                const LoginPage()));
         break;
     }
   }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/http_getAllUsersTest.dart';
 import 'package:flutter_test_app/http_insertNewUserTest.dart';
@@ -6,23 +8,32 @@ import 'package:flutter_test_app/policy_page.dart';
 import 'package:flutter_test_app/settings_page.dart';
 import 'package:flutter_test_app/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'datattypes/datatypes.dart';
 import 'learn_flutter_page.dart';
 
 // ignore: must_be_immutable
 class EnterPage extends StatefulWidget {
   String subject;
   String tutor;
-  EnterPage({super.key, required this.subject, required this.tutor});
+  int tutoring_id;
+  EnterPage(
+      {super.key,
+      required this.subject,
+      required this.tutor,
+      required this.tutoring_id});
   @override
   // ignore: no_logic_in_create_state
-  State<EnterPage> createState() => _EnterPageState(subject, tutor);
+  State<EnterPage> createState() =>
+      _EnterPageState(subject, tutor, tutoring_id);
 }
 
 class _EnterPageState extends State<EnterPage> {
   String subject;
   String tutor;
-  _EnterPageState(this.subject, this.tutor);
+  int tutoring_id;
+  _EnterPageState(this.subject, this.tutor, this.tutoring_id);
   bool isSwitch = false;
   bool? isCheckBox = false;
   @override
@@ -160,7 +171,7 @@ class _EnterPageState extends State<EnterPage> {
               alignment: Alignment.center,
               margin: const EdgeInsets.all(20.0),
               child: Text(
-                'Kurs',
+                'Kursübersicht',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
@@ -203,7 +214,10 @@ class _EnterPageState extends State<EnterPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).iconTheme.color,
                     ),
-                    onPressed: () => showActionSnackbar(context),
+                    onPressed: () => {
+                      addUserTutoring(tutoring_id),
+                      showActionSnackbar(context),
+                    },
                     child: Text(
                       "Einschreiben",
                       style: TextStyle(
@@ -263,6 +277,25 @@ class _EnterPageState extends State<EnterPage> {
             builder: (context) =>
                 LoginPage())); // wenn richtige Login Seite da ist dann pushAndRemoveUntil
         break;
+    }
+  }
+
+  static addUserTutoring(int tutoring_id) async {
+    //Use store manager to read logged in user
+    var prefs = await SharedPreferences.getInstance();
+    String userEmail = prefs.getString('loggedInUser')!;
+
+    final response = await http.post(
+        Uri.parse("http://127.0.0.1:3333/AddUserTutoring"),
+        body: jsonEncode(<String, String>{
+          "user_email": userEmail,
+          "tutoring_id": tutoring_id.toString()
+        }));
+
+    final body = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      print("adding user_tutoring worked: " + body);
     }
   }
 }

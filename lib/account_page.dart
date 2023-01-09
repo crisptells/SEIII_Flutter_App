@@ -275,6 +275,20 @@ class _AccountPageState extends State<AccountPage> {
     return UserExp.fromJson(body);
   }
 
+  static Future<List<Tutoring>> getUserTutorings() async {
+    //Use store manager to read logged in user
+    var prefs = await SharedPreferences.getInstance();
+    String userEmail = prefs.getString('loggedInUser')!;
+
+    final response = await http.post(
+        Uri.parse("http://127.0.0.1:3333/GetUsersTutorings"),
+        body: jsonEncode(<String, String>{"Email": userEmail}));
+
+    final body = json.decode(response.body);
+    print(body);
+    return body.map<Tutoring>(Tutoring.fromJson).toList();
+  }
+
   Future<User> userFuture = getUser();
   //Method to retrieve user data
   static Future<User> getUser() async {
@@ -289,6 +303,8 @@ class _AccountPageState extends State<AccountPage> {
     var body = json.decode(response.body);
     return User.fromJson(body);
   }
+
+  Future<List<Tutoring>> tutoringsFuture = getUserTutorings();
 
   @override
   Widget build(BuildContext context) {
@@ -338,12 +354,19 @@ class _AccountPageState extends State<AccountPage> {
                     color: Theme.of(context).iconTheme.color),
               ),
             ),
-            ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: 3,
-              itemBuilder: (BuildContext context, index) {
-                return makeCard;
+            FutureBuilder<List<Tutoring>>(
+              future: tutoringsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Ahh error! ${snapshot.hasError}');
+                } else if (snapshot.hasData) {
+                  final tutorings = snapshot.data!;
+                  return buildTutorings(tutorings);
+                } else {
+                  return const Text("no Tutorings data");
+                }
               },
             ),
           ],
@@ -380,3 +403,29 @@ class _AccountPageState extends State<AccountPage> {
     ]);
   }
 }
+
+Widget buildTutorings(List<Tutoring> tutorings) => ListView.builder(
+      shrinkWrap: true,
+      itemCount: tutorings.length,
+      itemBuilder: (context, index) {
+        final tutoring = tutorings[index];
+
+        return Card(
+          child: ListTile(
+            tileColor: Theme.of(context).backgroundColor,
+            title: Text(
+              tutoring.subject,
+              style: TextStyle(color: Theme.of(context).iconTheme.color),
+            ),
+            subtitle: Text(
+              tutoring.tutor,
+              style: TextStyle(color: Theme.of(context).iconTheme.color),
+            ),
+            leading: Icon(
+              Icons.school,
+              color: Theme.of(context).iconTheme.color,
+            ),
+          ),
+        );
+      },
+    );

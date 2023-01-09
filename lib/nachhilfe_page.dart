@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/datattypes/datatypes.dart';
 
-
 class NachhilfePage extends StatelessWidget {
   Future<List<Tutoring>> tutoringsFuture = getTutorings();
 
@@ -64,8 +63,12 @@ class NachhilfePage extends StatelessWidget {
                 style: TextStyle(color: Theme.of(context).iconTheme.color),
               ),
               onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => EnterPage(subject: tutoring.subject, tutor: tutoring.tutor)));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EnterPage(
+                          subject: tutoring.subject,
+                          tutor: tutoring.tutor,
+                          tutoring_id: tutoring.tutoring_id,
+                        )));
               },
               leading: Icon(
                 Icons.school,

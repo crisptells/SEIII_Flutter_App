@@ -118,14 +118,18 @@ class NachhilfePage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                TextField(
-                  style: TextStyle(color: Theme.of(context).iconTheme.color),
-                  cursorColor: Theme.of(context).iconTheme.color,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
+                SizedBox(
+                  width: 400,
+                  child: TextFormField(
+                    style: TextStyle(color: Theme.of(context).iconTheme.color),
+                    cursorColor: Theme.of(context).iconTheme.color,
+                    decoration: InputDecoration(
+                      border: const UnderlineInputBorder(),
+                      focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                            color: Theme.of(context).iconTheme.color!)),
+                            color: Theme.of(context).iconTheme.color!),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -145,14 +149,18 @@ class NachhilfePage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                TextField(
-                  style: TextStyle(color: Theme.of(context).iconTheme.color),
-                  cursorColor: Theme.of(context).iconTheme.color,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
+                SizedBox(
+                  width: 400,
+                  child: TextFormField(
+                    style: TextStyle(color: Theme.of(context).iconTheme.color),
+                    cursorColor: Theme.of(context).iconTheme.color,
+                    decoration: InputDecoration(
+                      border: const UnderlineInputBorder(),
+                      focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                            color: Theme.of(context).iconTheme.color!)),
+                            color: Theme.of(context).iconTheme.color!),
+                      ),
+                    ),
                   ),
                 ),
               ],

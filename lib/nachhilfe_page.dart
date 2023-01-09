@@ -118,8 +118,8 @@ class _NachhilfePageState extends State<NachhilfePage> {
                     controller: kursController,
                     decoration: InputDecoration(
                         labelText: 'Fach',
-                        labelStyle:
-                            TextStyle(color: Theme.of(context).iconTheme.color)),
+                        labelStyle: TextStyle(
+                            color: Theme.of(context).iconTheme.color)),
                   ),
                 ),
                 const SizedBox(

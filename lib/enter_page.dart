@@ -1,17 +1,15 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_test_app/http_getAllUsersTest.dart';
-import 'package:flutter_test_app/http_insertNewUserTest.dart';
+//import 'package:flutter_test_app/http_getAllUsersTest.dart';
+//import 'package:flutter_test_app/http_insertNewUserTest.dart';
 import 'package:flutter_test_app/login_out_page.dart';
 import 'package:flutter_test_app/policy_page.dart';
 import 'package:flutter_test_app/settings_page.dart';
 import 'package:flutter_test_app/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'datattypes/datatypes.dart';
-import 'learn_flutter_page.dart';
 
 // ignore: must_be_immutable
 class EnterPage extends StatefulWidget {
@@ -280,6 +278,32 @@ class _EnterPageState extends State<EnterPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  Future<Widget> showEndTutoringButton(
+      BuildContext context, String name) async {
+    //Use store manager to read logged in user
+    var prefs = await SharedPreferences.getInstance();
+    String userEmail = prefs.getString('loggedInUser')!;
+
+    final response = await http.post(Uri.parse('http://127.0.0.1:3333/User'),
+        body: jsonEncode(<String, String>{"email": userEmail}));
+    User user;
+    if (response.statusCode != 200) {
+      return const SizedBox();
+    }
+    var body = json.decode(response.body);
+    user = User.fromJson(body);
+
+    if (user.name == name) {
+      return Text(
+        'Stunde abschließen',
+        style: TextStyle(
+          color: Theme.of(context).iconTheme.color,
+        ),
+      );
+    }
+    return const SizedBox();
+  }
+
   // ignore: non_constant_identifier_names
   SelectedItem(BuildContext context, int item) {
     switch (item) {
@@ -310,9 +334,7 @@ class _EnterPageState extends State<EnterPage> {
           "user_email": userEmail,
           "tutoring_id": tutoring_id.toString()
         }));
-
     final body = json.decode(response.body);
-
     if (response.statusCode == 200) {
       showActionSnackbar(context, "Erfolgreich eingeschrieben", true);
     } else if (response.statusCode == 401) {

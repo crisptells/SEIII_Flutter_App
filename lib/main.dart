@@ -190,14 +190,6 @@ class _RootPageState extends State<RootPage> {
       ),
       body: pages[
           currentPage], // hier wird die Liste aufgerufen --> dann wird die entsprechende Seite angezeigt
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _dialogBuilder(context),
-        backgroundColor: Theme.of(context).backgroundColor,
-        child: Icon(
-          Icons.add,
-          color: Theme.of(context).iconTheme.color,
-        ),
-      ),
 
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

@@ -270,9 +270,19 @@ class _AccountPageState extends State<AccountPage> {
         body: jsonEncode(<String, String>{
           "email": userEmail,
         }));
-
-    var body = json.decode(response.body);
-    return UserExp.fromJson(body);
+    if (response.statusCode == 200) {
+      var body = json.decode(response.body);
+      return UserExp.fromJson(body);
+    } else {
+      return UserExp(
+          user_email: userEmail,
+          math: 0,
+          german: 0,
+          english: 0,
+          physics: 0,
+          chemistry: 0,
+          informatics: 0);
+    }
   }
 
   static Future<List<Tutoring>> getUserTutorings() async {
@@ -283,12 +293,15 @@ class _AccountPageState extends State<AccountPage> {
     final response = await http.post(
         Uri.parse("http://127.0.0.1:3333/GetUsersTutorings"),
         body: jsonEncode(<String, String>{"Email": userEmail}));
-
-    final body = json.decode(response.body);
-    return body.map<Tutoring>(Tutoring.fromJson).toList();
+    if (response.statusCode == 200) {
+      final body = json.decode(response.body);
+      return body.map<Tutoring>(Tutoring.fromJson).toList();
+    } else {
+      return List.empty();
+    }
   }
 
-  Future<User> userFuture = getUser();
+  Future<User>? userFuture = getUser();
   //Method to retrieve user data
   static Future<User> getUser() async {
     //Use store manager to read logged in user
@@ -298,7 +311,6 @@ class _AccountPageState extends State<AccountPage> {
     //Send Get User request to backend with email of logged in user
     final response = await post(Uri.parse('http://127.0.0.1:3333/User'),
         body: jsonEncode(<String, String>{"email": userEmail}));
-
     var body = json.decode(response.body);
     return User.fromJson(body);
   }
@@ -335,7 +347,8 @@ class _AccountPageState extends State<AccountPage> {
                 } else if (snapshot.hasData) {
                   return userInfo(snapshot.data!, context);
                 } else {
-                  return const Text("no userExp data");
+                  return const Text(
+                      "Benutzer hat noch keine Erfahrungspunkte gesammelt!");
                 }
               },
             ),
@@ -408,7 +421,6 @@ Widget buildTutorings(List<Tutoring> tutorings) => ListView.builder(
       itemCount: tutorings.length,
       itemBuilder: (context, index) {
         final tutoring = tutorings[index];
-
         return Card(
           child: ListTile(
             tileColor: Theme.of(context).backgroundColor,

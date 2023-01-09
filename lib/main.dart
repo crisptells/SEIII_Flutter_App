@@ -71,7 +71,6 @@ class _RootPageState extends State<RootPage> {
     // Liste aller Seiten
     const HomePage(), // 0
     NachhilfePage(),
-    const EventPage(),
     AccountPage(),
   ];
 
@@ -210,10 +209,6 @@ class _RootPageState extends State<RootPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Nachhilfe',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.event),
-            label: 'Termine',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

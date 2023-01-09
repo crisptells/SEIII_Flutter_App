@@ -1,31 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/account_page.dart';
-import 'package:flutter_test_app/devices_page.dart';
-import 'package:flutter_test_app/help_page.dart';
-import 'package:flutter_test_app/http_getAllUsersTest.dart';
-import 'package:flutter_test_app/http_insertNewUserTest.dart';
 import 'package:flutter_test_app/login_out_page.dart';
-import 'package:flutter_test_app/notification_page.dart';
 import 'package:flutter_test_app/policy_page.dart';
-import 'package:flutter_test_app/security_page.dart';
+import 'package:flutter_test_app/settings_page.dart';
 import 'package:flutter_test_app/theme.dart';
 import 'package:provider/provider.dart';
 
-import 'learn_flutter_page.dart';
-
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+class DevicesPage extends StatefulWidget {
+  const DevicesPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<DevicesPage> createState() => _DevicesPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _DevicesPageState extends State<DevicesPage> {
   bool isSwitch = false;
   bool? isCheckBox = false;
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
+    bool isChecked = false;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -157,7 +151,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Container(
               alignment: Alignment.center,
               child: Text(
-                'Einstellungen',
+                'Geräte',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 26,
@@ -167,146 +161,87 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(
               height: 30,
             ),
-            Container(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: TextField(
-                  cursorColor: Theme.of(context).iconTheme.color,
-                  style: TextStyle(color: Theme.of(context).iconTheme.color),
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Theme.of(context).iconTheme.color!)),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Theme.of(context).iconTheme.color!)),
-                    border: const OutlineInputBorder(),
-                    labelText: "Suche",
-                    labelStyle:
-                        TextStyle(color: Theme.of(context).iconTheme.color),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AccountPage()));
-                  },
+            
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(20.0),
                   child: Text(
-                    "Account",
+                    "Web",
                     style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
+                        color: Theme.of(context).iconTheme.color, fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
+                const Spacer(),
+                Container(
+                  margin: const EdgeInsets.all(20.0),
+                  alignment: Alignment.topRight,
+                  child: Icon(
+                    Icons.computer,
+                    color: Theme.of(context).iconTheme.color,
+                    size: 60,
+                  ),
+                )
+              ],
             ),
             const SizedBox(
               height: 10,
             ),
-            Container(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const NotificationPage()));
-                  },
+            Divider(
+              color: Theme.of(context).iconTheme.color,
+            ),
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(20.0),
                   child: Text(
-                    "Benachrichtigungen",
+                    "iOS",
                     style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
+                        color: Theme.of(context).iconTheme.color, fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
+                const Spacer(),
+                Container(
+                  margin: const EdgeInsets.all(20.0),
+                  alignment: Alignment.topRight,
+                  child: Icon(
+                    Icons.apple,
+                    color: Theme.of(context).iconTheme.color,
+                    size: 60,
+                  ),
+                )
+              ],
             ),
             const SizedBox(
               height: 10,
             ),
-            Container(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const DevicesPage()));
-                  },
+            Divider(
+              color: Theme.of(context).iconTheme.color,
+            ),
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(20.0),
                   child: Text(
-                    "Geräte",
+                    "Android",
                     style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
+                        color: Theme.of(context).iconTheme.color, fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
+                const Spacer(),
+                Container(
+                  margin: const EdgeInsets.all(20.0),
+                  alignment: Alignment.topRight,
+                  child: Icon(
+                    Icons.android,
+                    color: Theme.of(context).iconTheme.color,
+                    size: 60,
+                  ),
+                )
+              ],
             ),
             const SizedBox(
               height: 10,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SecurityPage()));
-                  },
-                  child: Text(
-                    "Sicherheit",
-                    style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const HelpPage()));
-                  },
-                  child: Text(
-                    "Hilfe",
-                    style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

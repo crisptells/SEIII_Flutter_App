@@ -218,28 +218,54 @@ class _EnterPageState extends State<EnterPage> {
             const SizedBox(
               height: 10,
             ),
-            Builder(builder: (context) {
-              return Container(
-                alignment: Alignment.center,
-                child: SizedBox(
-                  width: 400,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: Theme.of(context).backgroundColor,
                       backgroundColor: Theme.of(context).iconTheme.color,
+                      padding: const EdgeInsets.all(16.0),
+                      textStyle: const TextStyle(fontSize: 20),
                     ),
-                    onPressed: () => {
-                      addUserTutoring(tutoring_id),
+                    onPressed: () {
+                      addUserTutoring(tutoring_id);
                     },
-                    child: Text(
-                      "Einschreiben",
-                      style: TextStyle(
-                          color: Theme.of(context).backgroundColor,
-                          fontSize: 16),
-                    ),
+                    child: const Text('Einschreiben'),
                   ),
-                ),
-              );
-            }),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  FutureBuilder(
+                      future: showEndTutoringButton(context, tutor),
+                      builder: (BuildContext context, snapshot) {
+                        bool tutorLoggedIn = false;
+                        if (snapshot.hasData) {
+                          tutorLoggedIn = snapshot.data!;
+                        }
+                        if (tutorLoggedIn == true) {
+                          return TextButton(
+                            style: TextButton.styleFrom(
+                              foregroundColor:
+                                  Theme.of(context).backgroundColor,
+                              backgroundColor:
+                                  Theme.of(context).iconTheme.color,
+                              padding: const EdgeInsets.all(16.0),
+                              textStyle: const TextStyle(fontSize: 20),
+                            ),
+                            onPressed: () {
+                              finishLesson(tutoring_id);
+                            },
+                            child: const Text('Kurs beenden'),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      })
+                ],
+              ),
+            )
           ],
         ),
       ),
@@ -278,8 +304,7 @@ class _EnterPageState extends State<EnterPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  Future<Widget> showEndTutoringButton(
-      BuildContext context, String name) async {
+  Future<bool> showEndTutoringButton(BuildContext context, String name) async {
     //Use store manager to read logged in user
     var prefs = await SharedPreferences.getInstance();
     String userEmail = prefs.getString('loggedInUser')!;
@@ -288,20 +313,15 @@ class _EnterPageState extends State<EnterPage> {
         body: jsonEncode(<String, String>{"email": userEmail}));
     User user;
     if (response.statusCode != 200) {
-      return const SizedBox();
+      return false;
     }
     var body = json.decode(response.body);
     user = User.fromJson(body);
 
     if (user.name == name) {
-      return Text(
-        'Stunde abschließen',
-        style: TextStyle(
-          color: Theme.of(context).iconTheme.color,
-        ),
-      );
+      return true;
     }
-    return const SizedBox();
+    return false;
   }
 
   // ignore: non_constant_identifier_names
@@ -341,6 +361,34 @@ class _EnterPageState extends State<EnterPage> {
       showActionSnackbar(context, "Bereits eingeschrieben", false);
     } else {
       showActionSnackbar(context, "Irgendwas ist schiefgelaufe :(", false);
+    }
+  }
+
+  finishLesson(int tutoring_id) async {
+    final response = await http.post(
+        Uri.parse("http://127.0.0.1:3333/GetTutoringsUsers"),
+        body: jsonEncode(
+            <String, String>{"tutoring_id": tutoring_id.toString()}));
+    final usersList = json.decode(response.body);
+    print(tutoring_id);
+    for (String u in usersList) {
+      final response2 =
+          await http.post(Uri.parse("http://127.0.0.1:3333/CountUpExp"),
+              body: jsonEncode(<String, dynamic>{
+                "user_email": u,
+                "math": 5,
+                "german": 5,
+                "english": 5,
+                "physics": 5,
+                "chemistry": 5,
+                "informatics": 5
+              }));
+      final body2 = json.decode(response2.body);
+      if (response2.statusCode == 200) {
+        showActionSnackbar(context, "Erfolgreich abgeschlossen", true);
+      } else {
+        showActionSnackbar(context, "Irgendwas ist schiefgelaufe :(", false);
+      }
     }
   }
 }

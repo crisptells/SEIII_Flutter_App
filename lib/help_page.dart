@@ -1,30 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/account_page.dart';
-import 'package:flutter_test_app/help_page.dart';
-import 'package:flutter_test_app/http_getAllUsersTest.dart';
-import 'package:flutter_test_app/http_insertNewUserTest.dart';
 import 'package:flutter_test_app/login_out_page.dart';
-import 'package:flutter_test_app/notification_page.dart';
 import 'package:flutter_test_app/policy_page.dart';
-import 'package:flutter_test_app/security_page.dart';
+import 'package:flutter_test_app/settings_page.dart';
 import 'package:flutter_test_app/theme.dart';
 import 'package:provider/provider.dart';
 
-import 'learn_flutter_page.dart';
-
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+class HelpPage extends StatefulWidget {
+  const HelpPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<HelpPage> createState() => _HelpPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _HelpPageState extends State<HelpPage> {
   bool isSwitch = false;
   bool? isCheckBox = false;
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
+    bool isChecked = false;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -156,7 +151,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Container(
               alignment: Alignment.center,
               child: Text(
-                'Einstellungen',
+                'Hilfe',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 26,
@@ -168,22 +163,11 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             Container(
               alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AccountPage()));
-                  },
-                  child: Text(
-                    "Account",
-                    style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
-                  ),
-                ),
+              margin: const EdgeInsets.all(20.0),
+              child: Text(
+                "Diese App ist entwickelt worden um Studenten einen Ort zu bieten sich weiterzubilden. Hier gibt es Kurse für Studenten mit Dozenten die diese Kurse halten. In diese Kurse kann man sich als Student dann einschreiben und daran teilhaben.",
+                style: TextStyle(
+                    color: Theme.of(context).iconTheme.color, fontSize: 18),
               ),
             ),
             const SizedBox(
@@ -191,22 +175,11 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             Container(
               alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const NotificationPage()));
-                  },
-                  child: Text(
-                    "Benachrichtigungen",
-                    style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
-                  ),
-                ),
+              margin: const EdgeInsets.all(20.0),
+              child: Text(
+                "Bei weiteren Fragen kontaktieren Sie und bitte. Die Kontaktinformationen sind im Impressum zu finden.",
+                style: TextStyle(
+                    color: Theme.of(context).iconTheme.color, fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(
@@ -214,46 +187,22 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             Container(
               alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SecurityPage()));
-                  },
-                  child: Text(
-                    "Sicherheit",
-                    style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
-                  ),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).backgroundColor,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const PolicyPage()));
+                },
+                child: Text(
+                  "Impressum",
+                  style: TextStyle(color: Theme.of(context).iconTheme.color),
                 ),
               ),
             ),
             const SizedBox(
               height: 10,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const HelpPage()));
-                  },
-                  child: Text(
-                    "Hilfe",
-                    style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

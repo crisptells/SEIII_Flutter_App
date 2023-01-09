@@ -1,30 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/account_page.dart';
-import 'package:flutter_test_app/help_page.dart';
-import 'package:flutter_test_app/http_getAllUsersTest.dart';
-import 'package:flutter_test_app/http_insertNewUserTest.dart';
 import 'package:flutter_test_app/login_out_page.dart';
-import 'package:flutter_test_app/notification_page.dart';
 import 'package:flutter_test_app/policy_page.dart';
-import 'package:flutter_test_app/security_page.dart';
+import 'package:flutter_test_app/settings_page.dart';
 import 'package:flutter_test_app/theme.dart';
 import 'package:provider/provider.dart';
 
-import 'learn_flutter_page.dart';
-
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+class SecurityPage extends StatefulWidget {
+  const SecurityPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<SecurityPage> createState() => _SecurityPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SecurityPageState extends State<SecurityPage> {
   bool isSwitch = false;
   bool? isCheckBox = false;
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
+    bool isChecked = false;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -156,7 +151,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Container(
               alignment: Alignment.center,
               child: Text(
-                'Einstellungen',
+                'Sicherheit',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 26,
@@ -166,95 +161,35 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(
               height: 10,
             ),
-            Container(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AccountPage()));
-                  },
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(20.0),
                   child: Text(
-                    "Account",
+                    "Standort teilen:",
                     style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
+                        color: Theme.of(context).iconTheme.color, fontSize: 18),
                   ),
                 ),
-              ),
+                const Spacer(),
+                Container(
+                  margin: const EdgeInsets.all(20.0),
+                  alignment: Alignment.topRight,
+                  child: Switch(
+                    value: isSwitch,
+                    onChanged: (value) {
+                      setState(() {
+                        isSwitch = value;
+                      });
+                    },
+                  ),
+                )
+              ],
             ),
             const SizedBox(
               height: 10,
             ),
-            Container(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const NotificationPage()));
-                  },
-                  child: Text(
-                    "Benachrichtigungen",
-                    style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SecurityPage()));
-                  },
-                  child: Text(
-                    "Sicherheit",
-                    style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const HelpPage()));
-                  },
-                  child: Text(
-                    "Hilfe",
-                    style: TextStyle(
-                        color: Theme.of(context).backgroundColor, fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
+           
           ],
         ),
       ),

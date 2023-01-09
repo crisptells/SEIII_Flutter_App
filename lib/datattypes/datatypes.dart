@@ -24,14 +24,14 @@ class Tutoring {
   final int tutoring_id;
   final String tutor;
   final String subject;
-  final String maxStudents;
+  final String description;
   //final int? cash;
 
   const Tutoring({
     required this.tutoring_id,
     required this.tutor,
     required this.subject,
-    required this.maxStudents,
+    required this.description,
     //required this.cash
   });
 
@@ -39,7 +39,7 @@ class Tutoring {
         tutoring_id: int.parse(json['tutoring_id']),
         tutor: json['tutor'].toString(),
         subject: json['subject'].toString(),
-        maxStudents: json['maxStudents'].toString(),
+        description: json['description'].toString(),
       );
 
   /** 

@@ -18,22 +18,25 @@ class EnterPage extends StatefulWidget {
   String subject;
   String tutor;
   int tutoring_id;
+  String description;
   EnterPage(
       {super.key,
       required this.subject,
       required this.tutor,
-      required this.tutoring_id});
+      required this.tutoring_id,
+      required this.description});
   @override
   // ignore: no_logic_in_create_state
   State<EnterPage> createState() =>
-      _EnterPageState(subject, tutor, tutoring_id);
+      _EnterPageState(subject, tutor, tutoring_id, description);
 }
 
 class _EnterPageState extends State<EnterPage> {
   String subject;
   String tutor;
   int tutoring_id;
-  _EnterPageState(this.subject, this.tutor, this.tutoring_id);
+  String description;
+  _EnterPageState(this.subject, this.tutor, this.tutoring_id, this.description);
   bool isSwitch = false;
   bool? isCheckBox = false;
   @override
@@ -198,6 +201,18 @@ class _EnterPageState extends State<EnterPage> {
               alignment: Alignment.topLeft,
               child: Text(
                 'Dozent: $tutor',
+                style: TextStyle(
+                    fontSize: 16, color: Theme.of(context).iconTheme.color),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              margin: const EdgeInsets.all(20.0),
+              alignment: Alignment.topLeft,
+              child: Text(
+                'Beschreibung: $description',
                 style: TextStyle(
                     fontSize: 16, color: Theme.of(context).iconTheme.color),
               ),

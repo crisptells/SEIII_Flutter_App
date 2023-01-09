@@ -3,14 +3,20 @@ import 'package:flutter_test_app/enter_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/datattypes/datatypes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class NachhilfePage extends StatelessWidget {
+class NachhilfePage extends StatefulWidget {
+  const NachhilfePage({super.key});
+  @override
+  State<NachhilfePage> createState() => _NachhilfePageState();
+}
+
+class _NachhilfePageState extends State<NachhilfePage> {
   Future<List<Tutoring>> tutoringsFuture = getTutorings();
 
   TextEditingController kursController = TextEditingController();
-  TextEditingController dozentController = TextEditingController();
+  TextEditingController beschreibungController = TextEditingController();
 
-  NachhilfePage({super.key});
   static Future<List<Tutoring>> getTutorings() async {
     const url = "http://127.0.0.1:3333/Tutorings";
     final response = await http.get(Uri.parse(url));
@@ -79,6 +85,7 @@ class NachhilfePage extends StatelessWidget {
                           subject: tutoring.subject,
                           tutor: tutoring.tutor,
                           tutoring_id: tutoring.tutoring_id,
+                          description: tutoring.description,
                         )));
               },
               leading: Icon(
@@ -105,49 +112,22 @@ class NachhilfePage extends StatelessWidget {
             height: 230,
             child: Column(
               children: [
-                Text(
-                  'Kurs:                                                            ',
-                  style: TextStyle(
-                      color: Theme.of(context).iconTheme.color,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
+                TextField(
+                  controller: kursController,
+                  decoration: InputDecoration(
+                      labelText: 'Fach',
+                      labelStyle:
+                          TextStyle(color: Theme.of(context).iconTheme.color)),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 TextField(
-                  style: TextStyle(color: Theme.of(context).iconTheme.color),
-                  cursorColor: Theme.of(context).iconTheme.color,
+                  controller: beschreibungController,
                   decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Theme.of(context).iconTheme.color!)),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  'Dozent:                                                      ',
-                  style: TextStyle(
-                      color: Theme.of(context).iconTheme.color,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextField(
-                  style: TextStyle(color: Theme.of(context).iconTheme.color),
-                  cursorColor: Theme.of(context).iconTheme.color,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Theme.of(context).iconTheme.color!)),
-                  ),
+                      labelText: 'Beschreibung',
+                      labelStyle:
+                          TextStyle(color: Theme.of(context).iconTheme.color)),
                 ),
               ],
             ),
@@ -181,6 +161,8 @@ class NachhilfePage extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
+                createTutoring();
+                showActionSnackbar(context);
                 Navigator.of(context).pop();
               },
             ),
@@ -188,5 +170,61 @@ class NachhilfePage extends StatelessWidget {
         );
       },
     );
+  }
+
+  void createTutoring() async {
+    getUser().then((value) async {
+      http.Response response =
+          await http.post(Uri.parse('http://127.0.0.1:3333/AddTutoring'),
+              body: jsonEncode(<String, String>{
+                "tutor": value.name,
+                "subject": kursController.text.toString(),
+                "description": beschreibungController.text.toString()
+              }));
+      if (response.statusCode == 200) {
+        print("yay");
+      }
+    });
+  }
+
+  Future<User>? userFuture = getUser();
+  //Method to retrieve user data
+  static Future<User> getUser() async {
+    //Use store manager to read logged in user
+    var prefs = await SharedPreferences.getInstance();
+    String userEmail = prefs.getString('loggedInUser')!;
+
+    //Send Get User request to backend with email of logged in user
+    final response = await http.post(Uri.parse('http://127.0.0.1:3333/User'),
+        body: jsonEncode(<String, String>{"email": userEmail}));
+    var body = json.decode(response.body);
+    return User.fromJson(body);
+  }
+
+  void showActionSnackbar(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Row(
+        children: const [
+          Text(
+            "Kurs erfolgreich erstellt! ",
+            style: TextStyle(fontSize: 16),
+          ),
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        ],
+      ),
+      action: SnackBarAction(
+        label: " ",
+        onPressed: () {
+          // print("SnackBar Action");
+        },
+      ),
+      duration: const Duration(seconds: 3),
+      behavior: SnackBarBehavior.floating,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

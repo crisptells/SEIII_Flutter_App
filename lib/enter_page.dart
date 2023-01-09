@@ -255,7 +255,7 @@ class _EnterPageState extends State<EnterPage> {
                               textStyle: const TextStyle(fontSize: 20),
                             ),
                             onPressed: () {
-                              finishLesson(tutoring_id);
+                              finishLesson(tutoring_id, subject);
                             },
                             child: const Text('Kurs beenden'),
                           );
@@ -364,25 +364,99 @@ class _EnterPageState extends State<EnterPage> {
     }
   }
 
-  finishLesson(int tutoring_id) async {
+  finishLesson(int tutoring_id, String subject) async {
     final response = await http.post(
         Uri.parse("http://127.0.0.1:3333/GetTutoringsUsers"),
         body: jsonEncode(
             <String, String>{"tutoring_id": tutoring_id.toString()}));
     final usersList = json.decode(response.body);
+    var body;
+
     print(tutoring_id);
     for (String u in usersList) {
-      final response2 =
-          await http.post(Uri.parse("http://127.0.0.1:3333/CountUpExp"),
-              body: jsonEncode(<String, dynamic>{
-                "user_email": u,
-                "math": 5,
-                "german": 5,
-                "english": 5,
-                "physics": 5,
-                "chemistry": 5,
-                "informatics": 5
-              }));
+      switch (subject) {
+        case "Mathe":
+          {
+            body = jsonEncode(<String, dynamic>{
+              "user_email": u,
+              "math": 5,
+              "german": 0,
+              "english": 0,
+              "physics": 0,
+              "chemistry": 0,
+              "informatics": 0
+            });
+          }
+          break;
+        case "Deutsch":
+          {
+            body = jsonEncode(<String, dynamic>{
+              "user_email": u,
+              "math": 0,
+              "german": 5,
+              "english": 0,
+              "physics": 0,
+              "chemistry": 0,
+              "informatics": 0
+            });
+          }
+          break;
+        case "Englisch":
+          {
+            body = jsonEncode(<String, dynamic>{
+              "user_email": u,
+              "math": 0,
+              "german": 0,
+              "english": 5,
+              "physics": 0,
+              "chemistry": 0,
+              "informatics": 0
+            });
+          }
+          break;
+        case "Physik":
+          {
+            body = jsonEncode(<String, dynamic>{
+              "user_email": u,
+              "math": 0,
+              "german": 0,
+              "english": 0,
+              "physics": 5,
+              "chemistry": 0,
+              "informatics": 0
+            });
+          }
+          break;
+        case "Chemie":
+          {
+            body = jsonEncode(<String, dynamic>{
+              "user_email": u,
+              "math": 0,
+              "german": 0,
+              "english": 0,
+              "physics": 0,
+              "chemistry": 5,
+              "informatics": 0
+            });
+          }
+          break;
+        case "Informatik":
+          {
+            body = jsonEncode(<String, dynamic>{
+              "user_email": u,
+              "math": 0,
+              "german": 0,
+              "english": 0,
+              "physics": 0,
+              "chemistry": 0,
+              "informatics": 5
+            });
+          }
+          break;
+      }
+
+      final response2 = await http
+          .post(Uri.parse("http://127.0.0.1:3333/CountUpExp"), body: body);
       final body2 = json.decode(response2.body);
       if (response2.statusCode == 200) {
         showActionSnackbar(context, "Erfolgreich abgeschlossen", true);

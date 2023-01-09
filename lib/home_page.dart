@@ -9,13 +9,30 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
-    return Center(
-      child: Checkbox(
-          value: themeChange.darkTheme,
-          onChanged: (value) {
-            themeChange.darkTheme = value!;
-          }),
+    return Column(
+      children: [
+        const SizedBox(
+          height: 70,
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.school,
+            color: Theme.of(context).iconTheme.color,
+            size: 300,
+          ),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: Text(
+            "StudyRight",
+            style: TextStyle(color: Theme.of(context).iconTheme.color, fontSize: 42, fontWeight: FontWeight.bold),
+          ),
+        )
+      ],
     );
   }
 }

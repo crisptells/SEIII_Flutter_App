@@ -231,7 +231,6 @@ class _EnterPageState extends State<EnterPage> {
                     ),
                     onPressed: () => {
                       addUserTutoring(tutoring_id),
-                      showActionSnackbar(context),
                     },
                     child: Text(
                       "Einschreiben",
@@ -249,18 +248,23 @@ class _EnterPageState extends State<EnterPage> {
     );
   }
 
-  void showActionSnackbar(BuildContext context) {
+  void showActionSnackbar(BuildContext context, String content, bool check) {
     final snackBar = SnackBar(
       content: Row(
-        children: const [
+        children: [
           Text(
-            "Erfolgreich eingeschrieben! ",
-            style: TextStyle(fontSize: 16),
+            content,
+            style: const TextStyle(fontSize: 16),
           ),
-          Icon(
-            Icons.check,
-            color: Colors.green,
-          ),
+          check
+              ? const Icon(
+                  Icons.check,
+                  color: Colors.green,
+                )
+              : Icon(
+                  Icons.clear,
+                  color: Colors.red[700],
+                )
         ],
       ),
       action: SnackBarAction(
@@ -295,7 +299,7 @@ class _EnterPageState extends State<EnterPage> {
     }
   }
 
-  static addUserTutoring(int tutoring_id) async {
+  addUserTutoring(int tutoring_id) async {
     //Use store manager to read logged in user
     var prefs = await SharedPreferences.getInstance();
     String userEmail = prefs.getString('loggedInUser')!;
@@ -310,7 +314,11 @@ class _EnterPageState extends State<EnterPage> {
     final body = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      print("adding user_tutoring worked: " + body);
+      showActionSnackbar(context, "Erfolgreich eingeschrieben", true);
+    } else if (response.statusCode == 401) {
+      showActionSnackbar(context, "Bereits eingeschrieben", false);
+    } else {
+      showActionSnackbar(context, "Irgendwas ist schiefgelaufe :(", false);
     }
   }
 }

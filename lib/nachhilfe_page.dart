@@ -105,12 +105,15 @@ class NachhilfePage extends StatelessWidget {
             height: 230,
             child: Column(
               children: [
-                Text(
-                  'Kurs:                                                            ',
-                  style: TextStyle(
-                      color: Theme.of(context).iconTheme.color,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Kurs:',
+                    style: TextStyle(
+                        color: Theme.of(context).iconTheme.color,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -128,13 +131,16 @@ class NachhilfePage extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  'Dozent:                                                      ',
-                  style: TextStyle(
-                      color: Theme.of(context).iconTheme.color,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Beschreibung:',
+                    style: TextStyle(
+                        color: Theme.of(context).iconTheme.color,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
                 ),
                 const SizedBox(
                   height: 20,

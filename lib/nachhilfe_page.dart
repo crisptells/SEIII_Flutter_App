@@ -112,12 +112,15 @@ class _NachhilfePageState extends State<NachhilfePage> {
             height: 230,
             child: Column(
               children: [
-                TextField(
-                  controller: kursController,
-                  decoration: InputDecoration(
-                      labelText: 'Fach',
-                      labelStyle:
-                          TextStyle(color: Theme.of(context).iconTheme.color)),
+                SizedBox(
+                  width: 500,
+                  child: TextField(
+                    controller: kursController,
+                    decoration: InputDecoration(
+                        labelText: 'Fach',
+                        labelStyle:
+                            TextStyle(color: Theme.of(context).iconTheme.color)),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,

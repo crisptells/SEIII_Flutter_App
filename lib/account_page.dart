@@ -285,7 +285,6 @@ class _AccountPageState extends State<AccountPage> {
         body: jsonEncode(<String, String>{"Email": userEmail}));
 
     final body = json.decode(response.body);
-    print(body);
     return body.map<Tutoring>(Tutoring.fromJson).toList();
   }
 

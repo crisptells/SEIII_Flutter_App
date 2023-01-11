@@ -406,6 +406,7 @@ class _AccountPageState extends State<AccountPage> {
           } else if (snapshot.hasError) {
             return Text('Ahh error! ${snapshot.hasError}');
           } else if (snapshot.hasData) {
+            print(snapshot.data!.physics);
             return buildExp(snapshot.data!, context);
           } else {
             return const Text("no userExp data");
